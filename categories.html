@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#123f35">
+  <meta name="description" content="تِبيان، منصة قرآنية عربية للاستماع إلى التلاوات ومشاركة الصوت القرآني.">
+  <title>التصنيفات | تِبيان</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --green: #123f35;
+      --green-dark: #0b2c25;
+      --green-light: #1d5a49;
+      --gold: #c6a45b;
+      --gold-light: #e4cc8e;
+      --cream: #f8f6ef;
+      --white: #ffffff;
+      --text: #263b34;
+      --muted: #77847d;
+      --border: #e7e7de;
+      --shadow: 0 10px 35px rgba(18, 63, 53, .08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Cairo", sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+
+    .container {
+      width: min(1160px, 92%);
+      margin-inline: auto;
+    }
+
+    .topbar {
+      background: var(--green-dark);
+      color: #e8e8db;
+      padding: 7px 0;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    header {
+      background: rgba(255, 255, 255, .97);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(12px);
+    }
+
+    .navbar {
+      min-height: 78px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      flex-shrink: 0;
+    }
+
+    .brand-mark {
+      width: 47px;
+      height: 47px;
+      border-radius: 15px 15px 15px 4px;
+      background: var(--green);
+      color: var(--gold-light);
+      display: grid;
+      place-items: center;
+      font-family: "Amiri", serif;
+      font-size: 29px;
+      box-shadow: 0 5px 15px #123f3520;
+    }
+
+    .brand-name {
+      font-family: "Amiri", serif;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--green);
+    }
+
+    .brand-subtitle {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: .5px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 27px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .nav-links a { transition: color .2s; }
+    .nav-links a:hover { color: var(--gold); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 20px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      font-size: 13px;
+      transition: .2s;
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--green-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      border-color: #d9dfd8;
+      color: var(--green);
+      background: white;
+    }
+
+    .btn-outline:hover { border-color: var(--gold); }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 80% 15%, #29604c 0, transparent 38%),
+        linear-gradient(125deg, #0b2c25, #164638 65%, #12382f);
+      color: white;
+      padding: 80px 0 74px;
+    }
+
+    .hero::before {
+      content: "۞";
+      position: absolute;
+      left: -20px;
+      top: -110px;
+      font-family: "Amiri", serif;
+      font-size: 390px;
+      color: rgba(228, 204, 142, .055);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      align-items: center;
+      gap: 55px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(228, 204, 142, .3);
+      background: rgba(228, 204, 142, .08);
+      border-radius: 30px;
+      padding: 6px 14px;
+      color: var(--gold-light);
+      font-size: 12px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-family: "Amiri", serif;
+      font-size: clamp(40px, 5vw, 66px);
+      line-height: 1.35;
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+
+    .hero h1 span { color: var(--gold-light); }
+
+    .hero-description {
+      color: #d5e0d8;
+      max-width: 590px;
+      font-size: 15px;
+      line-height: 2.1;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--green-dark);
+    }
+
+    .btn-gold:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    .btn-glass {
+      background: rgba(255, 255, 255, .07);
+      color: white;
+      border-color: rgba(255, 255, 255, .25);
+    }
+
+    .hero-art {
+      min-height: 310px;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .quran-frame {
+      width: 250px;
+      height: 280px;
+      border: 1px solid rgba(228, 204, 142, .6);
+      border-radius: 120px 120px 18px 18px;
+      background: linear-gradient(150deg, #1d5947, #0a2b24);
+      box-shadow: 0 25px 65px #0004, inset 0 0 35px #e4cc8e0b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      position: relative;
+    }
+
+    .quran-frame::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(228, 204, 142, .3);
+      border-radius: 110px 110px 12px 12px;
+    }
+
+    .quran-symbol {
+      font-family: "Amiri", serif;
+      font-size: 83px;
+      color: var(--gold-light);
+      line-height: 1.2;
+    }
+
+    .quran-arabic {
+      font-family: "Amiri", serif;
+      font-size: 25px;
+      color: white;
+    }
+
+    .quran-caption {
+      font-size: 12px;
+      color: var(--gold-light);
+      letter-spacing: 2px;
+    }
+
+    .floating-badge {
+      position: absolute;
+      background: white;
+      color: var(--green);
+      border-radius: 12px;
+      padding: 12px 16px;
+      box-shadow: var(--shadow);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .badge-top { top: 30px; right: 0; }
+    .badge-bottom { bottom: 20px; left: 0; }
+
+    .section { padding: 75px 0; }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 38px;
+    }
+
+    .section-kicker {
+      color: #a17c32;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .section-heading h2 {
+      font-family: "Amiri", serif;
+      font-size: clamp(30px, 4vw, 43px);
+      color: var(--green);
+      line-height: 1.5;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    .category-tools {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0 15px;
+      min-height: 48px;
+      flex: 1;
+      max-width: 420px;
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      background: transparent;
+      width: 100%;
+      color: var(--text);
+      font-size: 13px;
+    }
+
+    .category-count {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .category-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: right;
+      padding: 27px;
+      min-height: 240px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 5px 20px rgba(18, 63, 53, .025);
+      overflow: hidden;
+      transition: transform .25s, box-shadow .25s, border-color .25s;
+    }
+
+    .category-card:hover {
+      transform: translateY(-5px);
+      border-color: #d8c38d;
+      box-shadow: var(--shadow);
+    }
+
+    .category-card::after {
+      content: "۞";
+      position: absolute;
+      left: -12px;
+      bottom: -45px;
+      color: rgba(18, 63, 53, .045);
+      font-family: "Amiri", serif;
+      font-size: 150px;
+      pointer-events: none;
+    }
+
+    .category-icon {
+      width: 57px;
+      height: 57px;
+      display: grid;
+      place-items: center;
+      border-radius: 17px;
+      background: #edf3ed;
+      color: var(--green);
+      font-size: 26px;
+      margin-bottom: 17px;
+    }
+
+    .category-card h3 {
+      color: var(--green);
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 7px;
+    }
+
+    .category-card p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 2;
+      margin-bottom: 18px;
+    }
+
+    .category-link {
+      margin-top: auto;
+      color: #a17c32;
+      font-weight: 800;
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .empty-state {
+      display: none;
+      padding: 35px 15px;
+      text-align: center;
+      color: var(--muted);
+      background: white;
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+    }
+
+    .empty-state.show { display: block; }
+
+    .quote-band {
+      background: #edf2e9;
+      border-block: 1px solid #e0e8dc;
+      padding: 42px 0;
+      text-align: center;
+    }
+
+    .quote-band .quote {
+      font-family: "Amiri", serif;
+      color: var(--green);
+      font-size: clamp(23px, 3vw, 31px);
+      margin-bottom: 8px;
+    }
+
+    .quote-band .quote-note {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    footer {
+      background: var(--green-dark);
+      color: #d6e1d9;
+      padding: 42px 0 20px;
+    }
+
+    .footer-content {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 30px;
+      flex-wrap: wrap;
+      padding-bottom: 28px;
+    }
+
+    .footer-brand .brand-name { color: white; }
+    .footer-brand .brand-subtitle { color: #bdcfc3; }
+
+    .footer-description {
+      max-width: 380px;
+      font-size: 12px;
+      color: #bdcfc3;
+      margin-top: 14px;
+      line-height: 2.1;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      font-size: 12px;
+    }
+
+    .footer-links a:hover { color: var(--gold-light); }
+
+    .copyright {
+      border-top: 1px solid #ffffff1c;
+      padding-top: 17px;
+      text-align: center;
+      color: #aebfb4;
+      font-size: 11px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-art { display: none; }
+      .category-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .nav-links { gap: 15px; }
+    }
+
+    @media (max-width: 600px) {
+      .navbar { min-height: 68px; }
+      .nav-links { gap: 12px; font-size: 11px; }
+      .nav-links .optional-link { display: none; }
+      .brand-mark { width: 40px; height: 40px; }
+      .brand-name { font-size: 24px; }
+      .hero { padding: 55px 0; }
+      .category-grid { grid-template-columns: 1fr; }
+      .category-card { min-height: 215px; }
+      .section { padding: 52px 0; }
+      .category-tools { align-items: stretch; }
+      .search-box { max-width: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    تِبيان — مساحة عربية للاستماع إلى التلاوات القرآنية
+  </div>
+
+  <header>
+    <div class="container navbar">
+      <a class="brand" href="index.html" aria-label="تِبيان - الرئيسية">
+        <span class="brand-mark">ت</span>
+        <span>
+          <span class="brand-name">تِبيان</span>
+          <span class="brand-subtitle">للقرآن الكريم</span>
+        </span>
+      </a>
+
+      <nav class="nav-links" aria-label="القائمة الرئيسية">
+        <a href="index.html">الرئيسية</a>
+        <a href="categories.html" aria-current="page">التصنيفات</a>
+        <a href="recitations.html">التلاوات</a>
+        <a class="optional-link" href="channels.html">القنوات</a>
+      </nav>
+
+      <a class="btn btn-primary" href="login.html">حسابي</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">✦ اكتشف المحتوى القرآني الذي تبحث عنه</div>
+          <h1>آياتٌ تُتلى،<br><span>وقلوبٌ تطمئن</span></h1>
+          <p class="hero-description">
+            تصفّح تصنيفات المحتوى القرآني في تِبيان، واختر ما يناسب وقتك
+            واهتمامك، وانتقل بسهولة إلى مكتبة المحتوى.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-gold" href="#categories">تصفّح التصنيفات ←</a>
+            <a class="btn btn-glass" href="recitations.html">استكشف التلاوات</a>
+          </div>
+        </div>
+
+        <div class="hero-art" aria-hidden="true">
+          <div class="quran-frame">
+            <div class="quran-symbol">۞</div>
+            <div class="quran-arabic">القرآن الكريم</div>
+            <div class="quran-caption">نورٌ وهداية</div>
+          </div>
+          <div class="floating-badge badge-top">✦ تلاوات مختارة</div>
+          <div class="floating-badge badge-bottom">❋ استمع بقلبك</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="categories">
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-kicker">مكتبة تِبيان</div>
+          <h2>تصفّح حسب التصنيف</h2>
+          <p>اختر التصنيف المناسب للوصول إلى المحتوى القرآني المرتبط به.</p>
+        </div>
+
+        <div class="category-tools">
+          <label class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <input
+              id="category-search"
+              type="search"
+              placeholder="ابحث عن تصنيف..."
+              autocomplete="off"
+              aria-label="البحث في التصنيفات"
+            >
+          </label>
+          <div class="category-count" id="category-count" aria-live="polite">
+            جارٍ عرض التصنيفات
+          </div>
+        </div>
+
+        <div class="category-grid" id="category-grid">
+
+          <a class="category-card" href="quran.html" data-search="القرآن الكريم">
+            <span class="category-icon" aria-hidden="true">۞</span>
+            <h3>القرآن الكريم</h3>
+            <p>تصفّح القرآن الكريم واستمع إلى آيات الله وتدبّر معانيها.</p>
+            <span class="category-link">استكشف القرآن ←</span>
+          </a>
+
+          <a class="category-card" href="khshia.html" data-search="التلاوات الخاشعة">
+            <span class="category-icon" aria-hidden="true">♡</span>
+            <h3>التلاوات الخاشعة</h3>
+            <p>تلاوات تعين على السكينة والتأمل في آيات الله.</p>
+            <span class="category-link">استكشف التلاوات ←</span>
+          </a>
+
+          <a class="category-card" href="tajweed.html" data-search="أحكام التجويد تجويد مخارج الحروف">
+            <span class="category-icon" aria-hidden="true">◈</span>
+            <h3>أحكام التجويد</h3>
+            <p>تعرّف إلى أحكام التلاوة من خلال المحتوى القرآني.</p>
+            <span class="category-link">استكشف المحتوى ←</span>
+          </a>
+
+          <a class="category-card" href="readers.html" data-search="القراء مشاهير القراء">
+            <span class="category-icon" aria-hidden="true">♧</span>
+            <h3>القراء</h3>
+            <p>تعرّف إلى التلاوات بحسب أسماء القراء.</p>
+            <span class="category-link">استكشف القراء ←</span>
+          </a>
+
+          <a class="category-card" href="hifz.html" data-search="الحفظ والمراجعة حفظ مراجعة القرآن">
+            <span class="category-icon" aria-hidden="true">✎</span>
+            <h3>الحفظ والمراجعة</h3>
+            <p>مواد قرآنية تساعدك على حفظ الآيات ومراجعتها بانتظام.</p>
+            <span class="category-link">استكشف المحتوى ←</span>
+          </a>
+
+          <a class="category-card" href="tafsir.html" data-search="التفسير والتدبر">
+            <span class="category-icon" aria-hidden="true">۩</span>
+            <h3>التفسير والتدبر</h3>
+            <p>محتوى يساعدك على فهم معاني الآيات والتأمل فيها.</p>
+            <span class="category-link">استكشف المحتوى ←</span>
+          </a>
+
+        </div>
+
+        <div class="empty-state" id="empty-state">
+          لم نعثر على تصنيف يطابق بحثك. جرّب كلمة أخرى.
+        </div>
+      </div>
+    </section>
+
+    <section class="quote-band">
+      <div class="container">
+        <div class="quote">﴿ أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ ﴾</div>
+        <div class="quote-note">سورة الرعد — الآية ٢٨</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <a class="brand" href="index.html">
+            <span class="brand-mark">ت</span>
+            <span>
+              <span class="brand-name">تِبيان</span>
+              <span class="brand-subtitle">للقرآن الكريم</span>
+            </span>
+          </a>
+          <p class="footer-description">
+            تِبيان مساحة عربية للمحتوى القرآني، وتسهيل الوصول إليه عبر تصنيفات واضحة.
+          </p>
+        </div>
+
+        <nav class="footer-links" aria-label="روابط إضافية">
+          <a href="index.html">الرئيسية</a>
+          <a href="categories.html">التصنيفات</a>
+          <a href="recitations.html">التلاوات</a>
+          <a href="login.html">حسابي</a>
+        </nav>
+      </div>
+
+      <div class="copyright">
+        © <span id="current-year"></span> تِبيان — جميع الحقوق محفوظة
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const searchInput = document.getElementById("category-search");
+    const categoryCards = Array.from(
+      document.querySelectorAll(".category-card")
+    );
+    const categoryCount = document.getElementById("category-count");
+    const emptyState = document.getElementById("empty-state");
+
+    function filterCategories() {
+      const query = searchInput.value.trim().toLowerCase();
+      let visibleCount = 0;
+
+      categoryCards.forEach((card) => {
+        const searchableText = (
+          card.innerText + " " + (card.dataset.search || "")
+        ).toLowerCase();
+
+        const matches = searchableText.includes(query);
+        card.style.display = matches ? "" : "none";
+
+        if (matches) visibleCount++;
+      });
+
+      categoryCount.textContent =
+        `عدد التصنيفات المعروضة: ${visibleCount}`;
+
+      emptyState.classList.toggle("show", visibleCount === 0);
+    }
+
+    searchInput.addEventListener("input", filterCategories);
+
+    document.getElementById("current-year").textContent =
+      new Date().getFullYear();
+
+    filterCategories();
+  </script>
+</body>
+</html>

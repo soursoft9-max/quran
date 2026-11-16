@@ -1,0 +1,1889 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#123f35">
+  <meta name="description" content="تِبيان، منصة قرآنية عربية للاستماع إلى التلاوات ومشاركة الصوت القرآني، وكل تلاوة تُراجع قبل نشرها.">
+  <title>عن تِبيان | تِبيان</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+
+    :root {
+      --green: #123f35;
+      --green-dark: #0b2c25;
+      --green-light: #1d5a49;
+      --gold: #c6a45b;
+      --gold-light: #e4cc8e;
+      --cream: #f8f6ef;
+      --white: #ffffff;
+      --text: #263b34;
+      --muted: #77847d;
+      --border: #e7e7de;
+      --shadow: 0 10px 35px rgba(18, 63, 53, .08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Cairo", sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+
+    .container {
+      width: min(1160px, 92%);
+      margin-inline: auto;
+    }
+
+    .topbar {
+      background: var(--green-dark);
+      color: #e8e8db;
+      padding: 7px 0;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    header {
+      background: rgba(255, 255, 255, .97);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(12px);
+    }
+
+    .navbar {
+      min-height: 78px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      flex-shrink: 0;
+    }
+
+    .brand-mark {
+      width: 47px;
+      height: 47px;
+      border-radius: 15px 15px 15px 4px;
+      background: var(--green);
+      color: var(--gold-light);
+      display: grid;
+      place-items: center;
+      font-family: "Amiri", serif;
+      font-size: 29px;
+      box-shadow: 0 5px 15px #123f3520;
+    }
+
+    .brand-name {
+      font-family: "Amiri", serif;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--green);
+    }
+
+    .brand-subtitle {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: .5px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 27px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .nav-links a { transition: color .2s; }
+    .nav-links a:hover { color: var(--gold); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 20px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      font-size: 13px;
+      transition: .2s;
+    }
+
+    .btn-primary { background: var(--green); color: white; }
+
+    .btn-primary:hover {
+      background: var(--green-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      border-color: #d9dfd8;
+      color: var(--green);
+      background: white;
+    }
+
+    .btn-outline:hover { border-color: var(--gold); }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 80% 15%, #29604c 0, transparent 38%),
+        linear-gradient(125deg, #0b2c25, #164638 65%, #12382f);
+      color: white;
+      padding: 80px 0 74px;
+    }
+
+    .hero::before {
+      content: "۞";
+      position: absolute;
+      left: -20px;
+      top: -110px;
+      font-family: "Amiri", serif;
+      font-size: 390px;
+      color: rgba(228, 204, 142, .055);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      align-items: center;
+      gap: 55px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(228, 204, 142, .3);
+      background: rgba(228, 204, 142, .08);
+      border-radius: 30px;
+      padding: 6px 14px;
+      color: var(--gold-light);
+      font-size: 12px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-family: "Amiri", serif;
+      font-size: clamp(40px, 5vw, 66px);
+      line-height: 1.35;
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+
+    .hero h1 span { color: var(--gold-light); }
+
+    .hero-description {
+      color: #d5e0d8;
+      max-width: 590px;
+      font-size: 15px;
+      line-height: 2.1;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--green-dark);
+    }
+
+    .btn-gold:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    .btn-glass {
+      background: rgba(255, 255, 255, .07);
+      color: white;
+      border-color: rgba(255, 255, 255, .25);
+    }
+
+    .hero-art {
+      min-height: 310px;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .quran-frame {
+      width: 250px;
+      height: 280px;
+      border: 1px solid rgba(228, 204, 142, .6);
+      border-radius: 120px 120px 18px 18px;
+      background: linear-gradient(150deg, #1d5947, #0a2b24);
+      box-shadow: 0 25px 65px #0004, inset 0 0 35px #e4cc8e0b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      position: relative;
+    }
+
+    .quran-frame::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(228, 204, 142, .3);
+      border-radius: 110px 110px 12px 12px;
+    }
+
+    .quran-symbol {
+      font-family: "Amiri", serif;
+      font-size: 83px;
+      color: var(--gold-light);
+      line-height: 1.2;
+    }
+
+    .quran-arabic {
+      font-family: "Amiri", serif;
+      font-size: 25px;
+      color: white;
+    }
+
+    .quran-caption {
+      font-size: 10px;
+      color: #d8c58e;
+      letter-spacing: 2px;
+    }
+
+    .floating-note {
+      position: absolute;
+      background: #ffffff12;
+      border: 1px solid #ffffff2b;
+      backdrop-filter: blur(8px);
+      border-radius: 12px;
+      padding: 10px 15px;
+      color: #f2ead6;
+      font-size: 12px;
+    }
+
+    .note-one { top: 35px; right: 0; }
+    .note-two { bottom: 30px; left: 0; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-top: -1px;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      padding: 23px 0;
+    }
+
+    .stat {
+      text-align: center;
+      border-left: 1px solid var(--border);
+    }
+
+    .stat:last-child { border-left: 0; }
+
+    .stat strong {
+      display: block;
+      color: var(--green);
+      font-size: 23px;
+      font-weight: 800;
+    }
+
+    .stat span { color: var(--muted); font-size: 12px; }
+
+    section { padding: 70px 0; }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 20px;
+      margin-bottom: 27px;
+    }
+
+    .section-kicker {
+      font-size: 11px;
+      color: #a7833f;
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .section-title {
+      font-family: "Amiri", serif;
+      font-size: clamp(29px, 3vw, 38px);
+      line-height: 1.4;
+      color: var(--green);
+    }
+
+    .section-description {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 6px;
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .category-card {
+      padding: 23px 20px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: .25s;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .category-card:hover,
+    .category-card.active {
+      border-color: var(--gold);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .category-icon {
+      width: 55px;
+      height: 55px;
+      border-radius: 17px;
+      margin: 0 auto 12px;
+      display: grid;
+      place-items: center;
+      font-size: 25px;
+      background: #edf3ed;
+    }
+
+    .category-card h3 {
+      color: var(--green);
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .category-card p { color: var(--muted); font-size: 11px; }
+
+    .videos-section { background: #f0f1e9; }
+
+    .video-tools {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 230px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      border: 1px solid #e0e3d9;
+      background: white;
+      border-radius: 11px;
+      padding: 13px 43px 13px 15px;
+      outline: none;
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .search-box input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px #c6a45b18;
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 17px;
+    }
+
+    .filter-select {
+      padding: 12px 15px;
+      border: 1px solid #e0e3d9;
+      border-radius: 11px;
+      background: white;
+      color: var(--green);
+      outline: none;
+      font-size: 12px;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .video-card {
+      background: white;
+      border: 1px solid #e7e8df;
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: .25s;
+      min-width: 0;
+    }
+
+    .video-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .video-thumb {
+      aspect-ratio: 16 / 9;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #163f34, #34705a);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+
+    .video-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .4s;
+    }
+
+    .video-card:hover .video-thumb img { transform: scale(1.04); }
+
+    .thumb-placeholder {
+      color: #e4cc8e;
+      text-align: center;
+      font-family: "Amiri", serif;
+      font-size: 34px;
+      line-height: 1.6;
+      padding: 12px;
+    }
+
+    .play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 51px;
+      height: 51px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #ffffffeb;
+      color: var(--green);
+      box-shadow: 0 5px 20px #0002;
+      font-size: 19px;
+      padding-right: 3px;
+    }
+
+    .video-tag {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #103b30eF;
+      color: #f3dfaa;
+      border-radius: 6px;
+      padding: 4px 9px;
+      font-size: 10px;
+      z-index: 1;
+    }
+
+    .video-body { padding: 17px; }
+
+    .video-category {
+      color: #a7833f;
+      font-size: 10px;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+
+    .video-title {
+      font-size: 15px;
+      color: var(--green);
+      line-height: 1.8;
+      margin-bottom: 9px;
+      font-weight: 800;
+    }
+
+    .video-description {
+      color: var(--muted);
+      font-size: 11px;
+      margin-bottom: 14px;
+      line-height: 1.9;
+    }
+
+    .video-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      border-top: 1px solid #eff0e9;
+      padding-top: 12px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .reader {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      min-width: 0;
+    }
+
+    .reader-avatar {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #edf3ed;
+      color: var(--green);
+      font-size: 12px;
+    }
+
+    .reader span:last-child {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .watch-link {
+      border: 0;
+      background: transparent;
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .watch-link:hover { color: #b18d45; }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 45px 15px;
+      background: white;
+      border-radius: var(--radius);
+      border: 1px dashed #d8dfd5;
+    }
+
+    .empty-state strong {
+      display: block;
+      color: var(--green);
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .empty-state p { color: var(--muted); font-size: 13px; }
+
+    .loading {
+      grid-column: 1 / -1;
+      padding: 40px 15px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .contribute {
+      background: var(--green);
+      color: white;
+      padding: 58px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contribute::after {
+      content: "۞";
+      position: absolute;
+      left: 2%;
+      top: -115px;
+      font-family: "Amiri", serif;
+      font-size: 300px;
+      color: #ffffff08;
+      pointer-events: none;
+    }
+
+    .contribute-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contribute h2 {
+      font-family: "Amiri", serif;
+      font-size: 35px;
+      margin-bottom: 8px;
+    }
+
+    .contribute p {
+      color: #d6e1d9;
+      font-size: 13px;
+      max-width: 620px;
+    }
+
+    .contribute .btn { flex-shrink: 0; }
+
+    .notice {
+      margin-top: 13px;
+      font-size: 11px !important;
+      color: #e4cc8e !important;
+    }
+
+    footer {
+      background: #09271f;
+      color: #e6ebe5;
+      padding: 43px 0 18px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 45px;
+      padding-bottom: 32px;
+    }
+
+    .footer-brand .brand-name { color: white; }
+    .footer-brand .brand-subtitle { color: #c6d0c8; }
+
+    .footer-description {
+      color: #b4c2b9;
+      font-size: 12px;
+      margin-top: 16px;
+      max-width: 350px;
+      line-height: 2.1;
+    }
+
+    .footer-heading {
+      color: var(--gold-light);
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    .footer-links {
+      display: grid;
+      gap: 9px;
+      color: #c3cec5;
+      font-size: 12px;
+    }
+
+    .footer-links a:hover { color: var(--gold-light); }
+
+    .copyright {
+      border-top: 1px solid #ffffff18;
+      padding-top: 17px;
+      text-align: center;
+      color: #a8b9ad;
+      font-size: 11px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 22px;
+      right: 50%;
+      transform: translate(50%, 20px);
+      opacity: 0;
+      pointer-events: none;
+      background: #102f27;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 35px #0003;
+      font-size: 12px;
+      z-index: 100;
+      transition: .25s;
+      max-width: min(90%, 500px);
+      text-align: center;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(50%, 0);
+    }
+
+    /* مشغل الفيديو داخل صفحة تِبيان نفسها */
+    .tibyan-player-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(5, 20, 16, .88);
+    }
+
+    .tibyan-player-dialog {
+      width: min(100%, 980px);
+      background: #0b2c25;
+      border: 1px solid rgba(228, 204, 142, .55);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,.4);
+    }
+
+    .tibyan-player-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 16px;
+      color: #fff;
+      font-family: "Cairo", sans-serif;
+    }
+
+    .tibyan-player-title { margin: 0; font-size: 1rem; }
+
+    .tibyan-player-close {
+      border: 0;
+      border-radius: 10px;
+      padding: 5px 12px;
+      color: #123f35;
+      background: #e4cc8e;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .tibyan-player-video {
+      display: block;
+      width: 100%;
+      max-height: 75vh;
+      background: #000;
+    }
+
+    .tibyan-player-error {
+      display: none;
+      color: #fff;
+      padding: 18px;
+      text-align: center;
+      font-family: "Cairo", sans-serif;
+    }
+
+    /* تنسيقات الحسابات والقنوات الجديدة */
+    .account-section { background: #fff; }
+
+    .account-panel {
+      max-width: 720px;
+      margin: 25px auto 0;
+      padding: 28px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .account-panel h3 {
+      color: var(--green);
+      margin-bottom: 12px;
+      font-size: 20px;
+    }
+
+    .account-form {
+      display: grid;
+      gap: 13px;
+      margin-top: 20px;
+    }
+
+    .account-form label {
+      display: block;
+      color: var(--green);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .account-form input,
+    .account-form textarea {
+      display: block;
+      width: 100%;
+      margin-top: 6px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      color: var(--text);
+      outline: none;
+    }
+
+    .account-form input:focus,
+    .account-form textarea:focus { border-color: var(--gold); }
+
+    .account-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .account-message {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #f0f1e9;
+      color: var(--green);
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+
+
+    /* القنوات المنشورة */
+    .channels-section { background: #fff; }
+    .channel-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+    .channel-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      min-width: 0;
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .channel-card:hover, .channel-card:focus-visible {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(18, 63, 53, .13);
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+    .channel-open-hint { margin-top: 12px; color: var(--green); font-size: 12px; font-weight: 700; }
+    .channel-modal {
+      position: fixed; inset: 0; z-index: 9999; display: none;
+      align-items: center; justify-content: center; padding: 20px;
+      background: rgba(10, 25, 21, .66);
+    }
+    .channel-modal.is-open { display: flex; }
+    .channel-modal-panel {
+      position: relative; width: min(100%, 520px); max-height: 85vh; overflow: auto;
+      background: #fff; color: var(--text); border-radius: 20px; padding: 28px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.25); text-align: center;
+    }
+    .channel-modal-close {
+      position: absolute; top: 10px; inset-inline-end: 12px; border: 0;
+      background: #f1f3ef; color: var(--green); border-radius: 50%;
+      width: 38px; height: 38px; font-size: 24px; cursor: pointer;
+    }
+    .channel-modal-avatar { width: 86px; height: 86px; margin: 12px auto 16px; border-radius: 24px; overflow: hidden;
+      display: grid; place-items: center; background: var(--green); color: var(--gold-light); font-size: 36px; }
+    .channel-modal-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .channel-modal-panel h2 { color: var(--green); margin-bottom: 8px; }
+    .channel-modal-description { color: var(--muted); line-height: 1.9; margin: 12px 0 22px; }
+    .channel-modal-actions { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .channel-card-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 13px;
+    }
+    .channel-avatar {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 58px;
+      background: var(--green);
+      color: var(--gold-light);
+      font-family: "Amiri", serif;
+      font-size: 27px;
+      overflow: hidden;
+    }
+    .channel-avatar img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .channel-card h3 { color: var(--green); font-size: 18px; }
+    .channel-approved {
+      display: inline-block;
+      margin-top: 3px;
+      color: #26704d;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .channel-description { color: var(--muted); font-size: 13px; line-height: 1.9; }
+    @media (max-width: 900px) {
+      .channel-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 600px) {
+      .channel-grid { grid-template-columns: 1fr; }
+    }
+
+    .account-hidden { display: none !important; }
+
+    .account-status {
+      margin-top: 15px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 13px;
+    }
+
+    .btn:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links { gap: 14px; }
+
+      .hero-grid {
+        grid-template-columns: 1fr .7fr;
+        gap: 20px;
+      }
+
+      .video-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .categories { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 650px) {
+      .navbar {
+        min-height: 70px;
+        flex-wrap: wrap;
+        padding: 10px 0;
+        gap: 10px;
+      }
+
+      .brand-mark { width: 41px; height: 41px; }
+      .brand-name { font-size: 24px; }
+
+      .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 8px 0 2px;
+        font-size: 11px;
+      }
+
+      .navbar > .btn { padding: 9px 12px; font-size: 11px; }
+      .hero { padding: 53px 0 45px; }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero-description { margin-inline: auto; }
+      .hero-actions { justify-content: center; }
+      .hero-art { min-height: 250px; margin-top: 5px; }
+
+      .quran-frame { width: 200px; height: 230px; }
+      .quran-symbol { font-size: 65px; }
+      .note-one { right: 2%; }
+      .note-two { left: 2%; }
+      .stats { padding: 18px 0; }
+      .stat strong { font-size: 19px; }
+      .stat span { font-size: 10px; }
+      section { padding: 49px 0; }
+
+      .section-heading {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .video-grid { grid-template-columns: 1fr; gap: 17px; }
+      .video-tools { align-items: stretch; }
+      .search-box { flex-basis: 100%; }
+      .filter-select { flex: 1; min-width: 0; }
+
+      .contribute-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .contribute h2 { font-size: 29px; }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px 20px;
+      }
+
+      .footer-brand { grid-column: 1 / -1; }
+
+      .tibyan-player-overlay { padding: 8px; }
+      .tibyan-player-dialog { border-radius: 12px; }
+      .tibyan-player-video { max-height: 68vh; }
+
+      .account-panel { padding: 18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+    }
+
+    /* ===== إضافات تِبيان ===== */
+    .account-hidden { display: none !important; }
+    .btn-secondary { background: #edf1e9; color: var(--green); border-color: #dfe6dc; }
+    .btn-secondary:hover { border-color: var(--gold); }
+    .video-title a { color: inherit; }
+    .video-title a:hover { color: #a7833f; }
+    a.video-thumb { display: grid; }
+    .section-more { text-align: center; margin-top: 26px; }
+
+    .channel-banner {
+      display: flex; align-items: center; justify-content: space-between; gap: 14px;
+      flex-wrap: wrap; background: white; border: 1px solid var(--border);
+      border-radius: 14px; padding: 14px 18px; margin-bottom: 20px;
+    }
+    .channel-banner strong { color: var(--green); font-size: 16px; }
+    .channel-banner p { color: var(--muted); font-size: 12px; }
+
+    .about-section { background: linear-gradient(135deg, #edf1e8, #f8f6ef); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 35px; align-items: start; }
+    .about-copy p { color: #637168; font-size: 14px; margin-top: 12px; line-height: 2.1; }
+    .about-values { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .value-card { background: white; padding: 20px; border: 1px solid var(--border); border-radius: 14px; }
+    .value-card span { display: block; font-size: 24px; margin-bottom: 8px; }
+    .value-card h3 { color: var(--green); font-size: 14px; margin-bottom: 5px; }
+    .value-card p { color: var(--muted); font-size: 12px; line-height: 1.9; }
+
+    .review-steps {
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px;
+      margin-top: 34px; counter-reset: step;
+    }
+    .review-step {
+      background: white; border: 1px solid var(--border); border-radius: 14px;
+      padding: 20px 18px; position: relative;
+    }
+    .review-step::before {
+      counter-increment: step; content: counter(step);
+      display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%;
+      background: var(--green); color: var(--gold-light); font-weight: 800; margin-bottom: 10px;
+    }
+    .review-step h3 { color: var(--green); font-size: 14px; margin-bottom: 4px; }
+    .review-step p { color: var(--muted); font-size: 12px; line-height: 1.9; }
+
+    .role-actions {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px; margin: 18px 0 22px;
+    }
+    .role-card {
+      display: block; background: white; border: 1px solid var(--border);
+      border-radius: 14px; padding: 16px; transition: .2s;
+    }
+    .role-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+    .role-card strong { display: block; color: var(--green); font-size: 14px; }
+    .role-card span { color: var(--muted); font-size: 12px; }
+
+    .account-panel .account-status { margin-top: 10px; }
+    .inline-link { border: 0; background: none; color: #a7833f; font-weight: 800; text-decoration: underline; cursor: pointer; }
+
+    /* ===== إظهار أقسام الصفحة الحالية فقط ===== */
+    .page-part { display: none !important; }
+    body[data-page="home"] .page-part.on-home,
+    body[data-page="videos"] .page-part.on-videos,
+    body[data-page="channels"] .page-part.on-channels,
+    body[data-page="about"] .page-part.on-about,
+    body[data-page="account"] .page-part.on-account { display: block !important; }
+    body[data-page="home"] .stats.page-part.on-home { display: grid !important; }
+    body { min-height: 100vh; }
+
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .review-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 520px) {
+      .about-values, .review-steps { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body data-page="about">
+  <div class="topbar">
+    بِالْقُرْآنِ نَرْتَقِي، وَبِالتَّلَاوَةِ تَطْمَئِنُّ الْقُلُوبُ
+  </div>
+
+  <header>
+    <div class="container navbar">
+      <a href="index.html" class="brand" aria-label="العودة إلى الصفحة الرئيسية">
+        <div class="brand-mark">ت</div>
+        <div>
+          <div class="brand-name">تِبيان</div>
+          <div class="brand-subtitle">منصة القرآن الكريم</div>
+        </div>
+      </a>
+
+      <nav class="nav-links" aria-label="القائمة الرئيسية">
+        <a href="index.html">الرئيسية</a>
+        <a href="categories.html">التصنيفات</a>
+        <a href="recitations.html">التلاوات</a>
+        <a href="channels.html">القنوات</a>
+        <a href="about.html">عن تِبيان</a>
+      </nav>
+
+      <a class="btn btn-primary" href="login.html" data-auth-button>تسجيل الدخول</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- الواجهة الرئيسية -->
+    <section class="hero page-part on-home" id="home">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">✦ مساحة قرآنية تجمعنا</div>
+          <h1>نورٌ يتلى، وأثرٌ <span>يبقى</span></h1>
+          <p class="hero-description">
+            مرحبًا بك في تِبيان، مساحة قرآنية للاستماع إلى التلاوات
+            ومشاركة الصوت النديّ، واكتشاف جمال القرآن الكريم في كل آية.
+            كل تلاوة يراجعها متطوعون وتعتمدها الإدارة قبل نشرها.
+          </p>
+
+          <div class="hero-actions">
+            <a href="recitations.html" class="btn btn-gold">▶ اكتشف التلاوات</a>
+            <a href="signup.html" class="btn btn-glass">أنشئ حسابك ←</a>
+          </div>
+        </div>
+
+        <div class="hero-art" aria-hidden="true">
+          <div class="floating-note note-one">✧ آياتٌ تتلى بخشوع</div>
+          <div class="quran-frame">
+            <div class="quran-symbol">۞</div>
+            <div class="quran-arabic">كِتَابُ اللَّهِ</div>
+            <div class="quran-caption">تِبيان · تلاوة وتدبّر</div>
+          </div>
+          <div class="floating-note note-two">﴿ وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا ﴾</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- إحصائيات -->
+    <div class="stats page-part on-home">
+      <div class="stat">
+        <strong id="video-count">—</strong>
+        <span>تلاوات منشورة</span>
+      </div>
+      <div class="stat">
+        <strong id="channel-count">—</strong>
+        <span>قنوات معتمدة</span>
+      </div>
+      <div class="stat">
+        <strong>✓</strong>
+        <span>كل تلاوة تُراجع قبل نشرها</span>
+      </div>
+    </div>
+
+    <!-- التصنيفات -->
+    <section class="page-part on-home on-videos" id="categories">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <div class="section-kicker">اكتشف ما تحب</div>
+            <h2 class="section-title">تصفّح حسب التصنيف</h2>
+            <p class="section-description">اختر ما يناسبك، واستمتع بتجربة قرآنية مميزة.</p>
+          </div>
+        </div>
+        <div class="categories" id="category-buttons"></div>
+      </div>
+    </section>
+
+    <!-- مكتبة التلاوات -->
+    <section class="videos-section page-part on-home on-videos" id="videos">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <div class="section-kicker">من مكتبة تِبيان</div>
+            <h2 class="section-title" id="videos-title">تلاوات تستحق الاستماع</h2>
+            <p class="section-description">اكتشف التلاوات المنشورة وابحث عن قارئك المفضل.</p>
+          </div>
+          <a href="account.html" class="btn btn-outline">أنشئ قناتك ＋</a>
+        </div>
+
+        <div class="channel-banner account-hidden" id="channel-banner">
+          <div>
+            <strong id="channel-banner-name"></strong>
+            <p id="channel-banner-description"></p>
+          </div>
+          <a class="btn btn-secondary" href="recitations.html">عرض كل التلاوات</a>
+        </div>
+
+        <div class="video-tools">
+          <div class="search-box">
+            <span class="search-icon">⌕</span>
+            <input id="search-input" type="search"
+                   placeholder="ابحث باسم التلاوة أو القارئ..."
+                   aria-label="البحث عن تلاوة">
+          </div>
+          <select class="filter-select" id="category-filter" aria-label="تصفية حسب التصنيف"></select>
+          <select class="filter-select" id="sort-filter" aria-label="ترتيب التلاوات">
+            <option value="newest">الأحدث أولًا</option>
+            <option value="oldest">الأقدم أولًا</option>
+            <option value="title">الترتيب حسب الاسم</option>
+          </select>
+        </div>
+
+        <div class="video-grid" id="video-grid" aria-live="polite">
+          <div class="loading">جارٍ تحميل التلاوات...</div>
+        </div>
+
+        <div class="section-more account-hidden" id="videos-more">
+          <a class="btn btn-primary" href="recitations.html">عرض كل التلاوات ←</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- القنوات -->
+    <section class="channels-section page-part on-home on-channels" id="channels">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <div class="section-kicker">أصوات من مجتمع تِبيان</div>
+            <h2 class="section-title">القنوات المعتمدة</h2>
+            <p class="section-description">قنوات القرّاء التي اعتمدتها إدارة تِبيان.</p>
+          </div>
+        </div>
+        <div class="channel-grid" id="channel-grid" aria-live="polite">
+          <div class="empty-state"><strong>جارٍ تحميل القنوات...</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- عن تِبيان -->
+    <section class="about-section page-part on-about" id="about-info">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-copy">
+            <div class="section-kicker">عن تِبيان</div>
+            <h2 class="section-title">مساحة قرآنية نقيّة، بلا إعلانات</h2>
+            <p>
+              تِبيان منصة عربية مستقلة تجمع التلاوات القرآنية في مكان واحد، وتتيح
+              للقرّاء إنشاء قنواتهم ومشاركة تلاواتهم مع الناس.
+            </p>
+            <p>
+              ولأن كلام الله أمانة، لا تُنشر أي تلاوة على تِبيان إلا بعد أن يستمع إليها
+              فريق من المتطوعين المؤهلين ويتحققوا من سلامتها، ثم تعتمدها الإدارة.
+            </p>
+            <p><a class="inline-link" href="policy.html">اقرأ سياسة المحتوى والمراجعة</a></p>
+          </div>
+          <div class="about-values">
+            <div class="value-card"><span>۞</span><h3>إتقان التلاوة</h3><p>نراجع سلامة القراءة وأحكامها قبل النشر.</p></div>
+            <div class="value-card"><span>🤍</span><h3>بيئة نقيّة</h3><p>بلا إعلانات وبلا موسيقى أو مؤثرات غير لائقة.</p></div>
+            <div class="value-card"><span>🤝</span><h3>مجتمع متطوع</h3><p>متطوعون يخدمون كتاب الله بمراجعة كل تلاوة.</p></div>
+            <div class="value-card"><span>✓</span><h3>اعتماد الإدارة</h3><p>القرار النهائي بالنشر لإدارة تِبيان.</p></div>
+          </div>
+        </div>
+
+        <div class="review-steps">
+          <div class="review-step"><h3>رفع التلاوة</h3><p>صاحب القناة المعتمدة يرفع تلاوته فتصبح «قيد المراجعة».</p></div>
+          <div class="review-step"><h3>مراجعة المتطوعين</h3><p>يستمع المتطوعون إليها ويوافقون عليها أو يذكرون سبب الرفض.</p></div>
+          <div class="review-step"><h3>قرار الإدارة</h3><p>بعد اكتمال موافقات المتطوعين تتخذ الإدارة القرار النهائي.</p></div>
+          <div class="review-step"><h3>النشر</h3><p>تظهر التلاوة للزوار. وأي تعديل عليها يعيدها إلى المراجعة.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- دعوة للمشاركة -->
+    <section class="contribute page-part on-home on-about" id="about">
+      <div class="container contribute-inner">
+        <div>
+          <h2>اجعل لتلاوتك أثرًا طيبًا</h2>
+          <p>
+            أنشئ حسابك وقدّم طلب قناة. بعد اعتماد قناتك يمكنك رفع تلاواتك،
+            وتُنشر كل تلاوة بعد مراجعة المتطوعين واعتماد إدارة تِبيان.
+          </p>
+        </div>
+        <a href="account.html" class="btn btn-gold">ابدأ الآن ←</a>
+      </div>
+    </section>
+
+    <!-- الحساب -->
+    <section class="account-section page-part on-account" id="account">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <div class="section-kicker">حسابك في تِبيان</div>
+            <h2 class="section-title">حسابي وقناتي</h2>
+            <p class="section-description">
+              أنشئ حسابًا، ثم أرسل طلبك لإنشاء قناة. بعد اعتماد القناة يمكنك رفع
+              تلاواتك، ولن تظهر أي تلاوة للزوار إلا بعد مراجعتها.
+            </p>
+          </div>
+        </div>
+
+        <div class="account-panel">
+          <div id="account-logged-out">
+            <h3>مرحبًا بك في تِبيان</h3>
+            <p>سجّل الدخول إذا كان لديك حساب، أو أنشئ حسابًا جديدًا للبدء.</p>
+            <div class="account-actions">
+              <a class="btn btn-primary" href="login.html?next=account.html">تسجيل الدخول</a>
+              <a class="btn btn-outline" href="signup.html">إنشاء حساب جديد</a>
+            </div>
+          </div>
+
+          <div id="account-logged-in" class="account-hidden">
+            <h3>حسابك</h3>
+            <p>البريد الإلكتروني: <strong id="account-email"></strong></p>
+
+            <div class="role-actions" id="role-actions"></div>
+
+            <div id="channel-request-area">
+              <form id="channel-request-form" class="account-form account-hidden">
+                <h3>طلب إنشاء قناة للقارئ</h3>
+                <label for="channel-name">اسم القناة
+                  <input id="channel-name" type="text" required maxlength="100"
+                         placeholder="مثال: قناة القارئ محمد">
+                </label>
+                <label for="channel-description">نبذة عن القناة
+                  <textarea id="channel-description" rows="4" maxlength="1000"
+                            placeholder="اكتب نبذة قصيرة عن القناة والقارئ"></textarea>
+                </label>
+                <button class="btn btn-primary" type="submit">إرسال طلب إنشاء القناة</button>
+              </form>
+
+              <div id="channel-request-status" class="account-status" role="status" aria-live="polite">
+                جارٍ التحقق من حالة طلبك...
+              </div>
+            </div>
+
+            <div class="account-actions" style="margin-top:18px">
+              <button id="logout-button" class="btn btn-outline" type="button">تسجيل الخروج</button>
+            </div>
+          </div>
+
+          <div id="account-message" class="account-message account-hidden" role="status" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- نافذة تفاصيل القناة -->
+  <div class="channel-modal" id="channel-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="channel-modal-title">
+    <div class="channel-modal-panel">
+      <button class="channel-modal-close" id="channel-modal-close" type="button" aria-label="إغلاق">×</button>
+      <div class="channel-modal-avatar" id="channel-modal-avatar">ت</div>
+      <h2 id="channel-modal-title">قناة تِبيان</h2>
+      <span class="channel-approved">✓ قناة معتمدة</span>
+      <p class="channel-modal-description" id="channel-modal-description"></p>
+      <div class="channel-modal-actions">
+        <a class="btn btn-primary" href="recitations.html" id="channel-modal-videos">تلاوات القناة</a>
+        <button class="btn btn-secondary" id="channel-modal-dismiss" type="button">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="brand">
+            <div class="brand-mark">ت</div>
+            <div>
+              <div class="brand-name">تِبيان</div>
+              <div class="brand-subtitle">منصة القرآن الكريم</div>
+            </div>
+          </a>
+          <p class="footer-description">
+            مساحة قرآنية تجمع محبي كتاب الله، وتتيح اكتشاف التلاوات
+            ومشاركتها في بيئة نقيّة تُراجع فيها كل تلاوة قبل نشرها.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="footer-heading">روابط سريعة</h3>
+          <div class="footer-links">
+            <a href="index.html">الرئيسية</a>
+            <a href="categories.html">التصنيفات</a>
+            <a href="recitations.html">مكتبة التلاوات</a>
+            <a href="readers.html">القرّاء</a>
+            <a href="channels.html">القنوات المعتمدة</a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="footer-heading">حسابك</h3>
+          <div class="footer-links">
+            <a href="account.html">حسابي وقناتي</a>
+            <a href="upload.html">رفع تلاوة</a>
+            <a href="policy.html">سياسة المحتوى والمراجعة</a>
+            <a href="about.html">عن تِبيان</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="copyright">
+        © <span id="year"></span> تِبيان — منصة قرآنية مستقلة. تصميم وتطوير سور للبرمجيات.
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="tibyan.js"></script>
+  <script>
+  "use strict";
+
+  const T = window.Tibyan;
+  const page = document.body.dataset.page;
+  const params = new URLSearchParams(window.location.search);
+  const $ = id => document.getElementById(id);
+
+  $("year").textContent = new Date().getFullYear();
+
+  const toast = $("toast");
+  let toastTimer = null;
+  function showToast(message) {
+    toast.textContent = message;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 3500);
+  }
+
+  function emptyState(title, text) {
+    return `<div class="empty-state"><strong>${T.escapeHTML(title)}</strong><p>${T.escapeHTML(text || "")}</p></div>`;
+  }
+
+  /* ===================== التلاوات ===================== */
+  const grid = $("video-grid");
+  const searchInput = $("search-input");
+  const categoryFilter = $("category-filter");
+  const sortFilter = $("sort-filter");
+  let allVideos = [];
+  let thumbnails = new Map();
+
+  T.fillCategorySelect(categoryFilter, { includeAll: true });
+
+  function buildCategoryButtons() {
+    const holder = $("category-buttons");
+    const items = [{ value: "all", label: "جميع التلاوات", icon: "📖" }]
+      .concat(T.CATEGORIES.filter(c => c.value !== "أخرى"));
+
+    holder.innerHTML = items.map(c => `
+      <button class="category-card${c.value === "all" ? " active" : ""}" type="button"
+              data-category="${T.escapeHTML(c.value)}">
+        <div class="category-icon">${T.escapeHTML(c.icon || "۞")}</div>
+        <h3>${T.escapeHTML(c.label)}</h3>
+        <p>${c.value === "all" ? "كل التلاوات المنشورة" : "تصفّح هذا التصنيف"}</p>
+      </button>`).join("");
+
+    holder.addEventListener("click", event => {
+      const button = event.target.closest("[data-category]");
+      if (!button) return;
+      const value = button.dataset.category;
+
+      if (page === "home") {
+        window.location.href = "recitations.html" +
+          (value === "all" ? "" : "?category=" + encodeURIComponent(value));
+        return;
+      }
+
+      categoryFilter.value = value;
+      markActiveCategory(value);
+      renderVideos();
+      $("videos").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
+  function markActiveCategory(value) {
+    document.querySelectorAll("#category-buttons .category-card").forEach(card => {
+      card.classList.toggle("active", card.dataset.category === value);
+    });
+  }
+
+  function renderVideos() {
+    const query = T.normalizeText(searchInput.value);
+    const category = categoryFilter.value || "all";
+
+    let videos = allVideos.filter(video => {
+      const text = T.normalizeText([
+        video.title, video.reader_name, video.category, video.description
+      ].join(" "));
+      return text.includes(query) && (category === "all" || video.category === category);
+    });
+
+    if (sortFilter.value === "oldest") {
+      videos.sort((a, b) => new Date(a.created_at || 0) - new Date(b.created_at || 0));
+    } else if (sortFilter.value === "title") {
+      videos.sort((a, b) => String(a.title || "").localeCompare(String(b.title || ""), "ar"));
+    } else {
+      videos.sort((a, b) =>
+        new Date(b.published_at || b.created_at || 0) - new Date(a.published_at || a.created_at || 0));
+    }
+
+    const limited = page === "home" && !query && category === "all";
+    if (limited) videos = videos.slice(0, 6);
+    $("videos-more").classList.toggle("account-hidden", !(limited && allVideos.length > 6));
+
+    if (!videos.length) {
+      grid.innerHTML = allVideos.length
+        ? emptyState("لم نعثر على تلاوات مطابقة", "جرّب كلمة بحث أخرى أو تصنيفًا مختلفًا.")
+        : emptyState("لا توجد تلاوات منشورة بعد", "ستظهر التلاوات هنا بعد مراجعتها واعتمادها.");
+      return;
+    }
+
+    grid.innerHTML = videos
+      .map(video => T.videoCardHTML(video, thumbnails.get(String(video.id))))
+      .join("");
+  }
+
+  async function loadChannelFilter() {
+    const channelId = params.get("channel");
+    if (!channelId) return null;
+
+    const { data, error } = await T.client
+      .from("channels")
+      .select("id,channel_name,description,user_id,status")
+      .eq("id", channelId)
+      .maybeSingle();
+
+    if (error || !data || !data.user_id) return null;
+
+    $("channel-banner").classList.remove("account-hidden");
+    $("channel-banner-name").textContent = "تلاوات " + (data.channel_name || "القناة");
+    $("channel-banner-description").textContent = data.description || "";
+    $("videos-title").textContent = data.channel_name || "تلاوات القناة";
+    return data.user_id;
+  }
+
+  async function loadVideos() {
+    try {
+      const userId = page === "videos" ? await loadChannelFilter() : null;
+      allVideos = await T.fetchPublishedVideos({ userId });
+      $("video-count").textContent = String(allVideos.length);
+      thumbnails = await T.resolveThumbnails(allVideos);
+      renderVideos();
+    } catch (error) {
+      console.error("خطأ تحميل التلاوات:", error);
+      grid.innerHTML = emptyState("تعذّر تحميل التلاوات", T.friendlyError(error));
+      $("video-count").textContent = "0";
+    }
+  }
+
+  searchInput.addEventListener("input", renderVideos);
+  sortFilter.addEventListener("change", renderVideos);
+  categoryFilter.addEventListener("change", () => {
+    markActiveCategory(categoryFilter.value);
+    renderVideos();
+  });
+
+  /* ===================== القنوات ===================== */
+  const channelGrid = $("channel-grid");
+  const channelsById = new Map();
+
+  async function loadChannels() {
+    try {
+      const { data, error } = await T.client
+        .from("channels")
+        .select("id,channel_name,description,avatar_url,status,created_at")
+        .eq("status", "approved")
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      const channels = data || [];
+      $("channel-count").textContent = String(channels.length);
+
+      if (!channels.length) {
+        channelGrid.innerHTML = emptyState("لا توجد قنوات معتمدة حاليًا", "ستظهر القنوات هنا بعد اعتمادها من الإدارة.");
+        return;
+      }
+
+      channelsById.clear();
+      channels.forEach(c => channelsById.set(String(c.id), c));
+
+      const shown = page === "home" ? channels.slice(0, 6) : channels;
+      channelGrid.innerHTML = shown.map(channel => {
+        const name = T.escapeHTML(channel.channel_name || "قناة قرآنية");
+        const description = T.escapeHTML(T.truncate(channel.description || "قناة لنشر التلاوات القرآنية.", 120));
+        const avatar = T.isHttpUrl(channel.avatar_url || "")
+          ? `<img src="${T.escapeHTML(channel.avatar_url)}" alt="" loading="lazy">`
+          : T.escapeHTML((channel.channel_name || "ت").trim().charAt(0) || "ت");
+
+        return `
+          <article class="channel-card" tabindex="0" role="button"
+                   aria-label="فتح قناة ${name}" data-channel-id="${T.escapeHTML(channel.id)}">
+            <div class="channel-card-top">
+              <div class="channel-avatar">${avatar}</div>
+              <div>
+                <h3>${name}</h3>
+                <span class="channel-approved">✓ قناة معتمدة</span>
+              </div>
+            </div>
+            <p class="channel-description">${description}</p>
+            <div class="channel-open-hint">اضغط لعرض القناة ←</div>
+          </article>`;
+      }).join("");
+    } catch (error) {
+      console.error("خطأ تحميل القنوات:", error);
+      channelGrid.innerHTML = emptyState("تعذّر تحميل القنوات", T.friendlyError(error));
+    }
+  }
+
+  const channelModal = $("channel-modal");
+
+  function openChannelModal(id) {
+    const channel = channelsById.get(String(id));
+    if (!channel) return;
+    $("channel-modal-title").textContent = channel.channel_name || "قناة قرآنية";
+    $("channel-modal-description").textContent = channel.description || "قناة لنشر التلاوات القرآنية.";
+    $("channel-modal-videos").href = "recitations.html?channel=" + encodeURIComponent(channel.id);
+
+    const avatar = $("channel-modal-avatar");
+    avatar.replaceChildren();
+    if (T.isHttpUrl(channel.avatar_url || "")) {
+      const img = document.createElement("img");
+      img.src = channel.avatar_url;
+      img.alt = "";
+      avatar.appendChild(img);
+    } else {
+      avatar.textContent = (channel.channel_name || "ت").trim().charAt(0) || "ت";
+    }
+
+    channelModal.classList.add("is-open");
+    channelModal.setAttribute("aria-hidden", "false");
+    $("channel-modal-close").focus();
+  }
+
+  function closeChannelModal() {
+    channelModal.classList.remove("is-open");
+    channelModal.setAttribute("aria-hidden", "true");
+  }
+
+  channelGrid.addEventListener("click", event => {
+    const card = event.target.closest("[data-channel-id]");
+    if (card) openChannelModal(card.dataset.channelId);
+  });
+  channelGrid.addEventListener("keydown", event => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    const card = event.target.closest("[data-channel-id]");
+    if (!card) return;
+    event.preventDefault();
+    openChannelModal(card.dataset.channelId);
+  });
+  $("channel-modal-close").addEventListener("click", closeChannelModal);
+  $("channel-modal-dismiss").addEventListener("click", closeChannelModal);
+  channelModal.addEventListener("click", event => {
+    if (event.target === channelModal) closeChannelModal();
+  });
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") closeChannelModal();
+  });
+
+  /* ===================== الحساب ===================== */
+  const accountMessage = $("account-message");
+  const requestForm = $("channel-request-form");
+  const requestStatus = $("channel-request-status");
+  let currentUser = null;
+
+  function showAccountMessage(message) {
+    accountMessage.textContent = message;
+    accountMessage.classList.remove("account-hidden");
+  }
+  function hideAccountMessage() {
+    accountMessage.textContent = "";
+    accountMessage.classList.add("account-hidden");
+  }
+
+  function renderRoleActions(roles) {
+    const cards = [];
+    if (roles.has_channel || roles.is_admin) {
+      cards.push(["upload.html", "⬆ رفع تلاوة جديدة", "وتابعي حالة تلاواتك ومراجعتها"]);
+    }
+    if (roles.is_volunteer || roles.is_admin) {
+      cards.push(["review.html", "🎧 لوحة المراجعة", "استمع إلى التلاوات المنتظرة وصوّت عليها"]);
+    }
+    if (roles.is_admin) {
+      cards.push(["admin.html", "⚙ لوحة الإدارة", "القنوات والمتطوعون والقرار النهائي"]);
+    }
+
+    $("role-actions").innerHTML = cards.map(([href, title, text]) => `
+      <a class="role-card" href="${href}"><strong>${title}</strong><span>${text}</span></a>
+    `).join("");
+  }
+
+  async function refreshChannelRequest(user, roles) {
+    requestForm.classList.add("account-hidden");
+    requestStatus.textContent = "جارٍ التحقق من حالة طلبك...";
+
+    if (roles.has_channel) {
+      requestStatus.textContent = "✓ قناتك معتمدة. يمكنك رفع تلاواتك، وتُنشر كل تلاوة بعد مراجعتها.";
+      return;
+    }
+
+    const { data, error } = await T.client
+      .from("channel_requests")
+      .select("id,channel_name,status,admin_note,created_at")
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    if (error) {
+      console.error(error);
+      requestStatus.textContent = "تعذّر جلب حالة الطلب: " + T.friendlyError(error);
+      return;
+    }
+
+    if (!data) {
+      requestForm.classList.remove("account-hidden");
+      requestStatus.textContent = "لم ترسل طلب قناة بعد. املأ النموذج لإرسال طلبك.";
+      return;
+    }
+
+    const name = "«" + (data.channel_name || "") + "»";
+    if (data.status === "pending") {
+      requestStatus.textContent = "طلب قناتك " + name + " قيد المراجعة لدى إدارة تِبيان.";
+    } else if (data.status === "approved") {
+      requestStatus.textContent = "تمت الموافقة على قناتك " + name + ".";
+    } else if (data.status === "rejected") {
+      requestStatus.innerHTML = "";
+      requestStatus.append(
+        "تم رفض طلب القناة " + name + "." +
+        (data.admin_note ? " السبب: " + data.admin_note + " " : " ")
+      );
+      const retry = document.createElement("button");
+      retry.type = "button";
+      retry.className = "inline-link";
+      retry.textContent = "تقديم طلب جديد";
+      retry.addEventListener("click", async () => {
+        const { error: delError } = await T.client.from("channel_requests").delete().eq("id", data.id);
+        if (delError) {
+          showAccountMessage("تعذّر حذف الطلب السابق: " + T.friendlyError(delError));
+          return;
+        }
+        await refreshChannelRequest(user, roles);
+      });
+      requestStatus.append(retry);
+    } else {
+      requestStatus.textContent = "حالة الطلب: " + data.status;
+    }
+  }
+
+  async function updateAccount() {
+    hideAccountMessage();
+    const roles = await T.getMyRoles();
+    currentUser = roles.user || null;
+
+    $("account-logged-out").classList.toggle("account-hidden", !!currentUser);
+    $("account-logged-in").classList.toggle("account-hidden", !currentUser);
+    if (!currentUser) return;
+
+    $("account-email").textContent = currentUser.email || "";
+
+    if (roles.setupMissing) {
+      showAccountMessage("تنبيه للإدارة: " + T.friendlyError(roles.error));
+    }
+
+    renderRoleActions(roles);
+    await refreshChannelRequest(currentUser, roles);
+  }
+
+  requestForm.addEventListener("submit", async event => {
+    event.preventDefault();
+    hideAccountMessage();
+    if (!currentUser) {
+      showAccountMessage("يرجى تسجيل الدخول أولًا.");
+      return;
+    }
+
+    const channelName = $("channel-name").value.trim();
+    const description = $("channel-description").value.trim();
+    if (!channelName) {
+      showAccountMessage("يرجى كتابة اسم القناة.");
+      return;
+    }
+
+    const button = requestForm.querySelector('button[type="submit"]');
+    button.disabled = true;
+    button.textContent = "جارٍ إرسال الطلب...";
+
+    try {
+      const { error } = await T.client.from("channel_requests").insert({
+        user_id: currentUser.id,
+        channel_name: channelName,
+        description: description || null,
+        status: "pending"
+      });
+      if (error) throw error;
+      requestForm.reset();
+      await updateAccount();
+      showAccountMessage("تم إرسال طلبك بنجاح، وهو بانتظار موافقة الإدارة.");
+    } catch (error) {
+      if (error && error.code === "23505") {
+        await updateAccount();
+        showAccountMessage("لديك طلب قناة سابق بالفعل.");
+      } else {
+        showAccountMessage("تعذّر إرسال الطلب: " + T.friendlyError(error));
+      }
+    } finally {
+      button.disabled = false;
+      button.textContent = "إرسال طلب إنشاء القناة";
+    }
+  });
+
+  $("logout-button").addEventListener("click", async () => {
+    const { error } = await T.client.auth.signOut();
+    if (error) {
+      showAccountMessage("تعذّر تسجيل الخروج: " + T.friendlyError(error));
+      return;
+    }
+    window.location.href = "index.html";
+  });
+
+  /* ===================== بدء التشغيل ===================== */
+  if (!T.client) {
+    grid.innerHTML = emptyState("تعذّر الاتصال", "تعذّر تحميل مكتبة الاتصال. تحقق من الإنترنت ثم أعد تحميل الصفحة.");
+  } else {
+    T.updateHeaderAuthButton();
+
+    if (page === "home" || page === "videos") {
+      buildCategoryButtons();
+      if (params.get("q")) searchInput.value = params.get("q");
+      const wanted = params.get("category");
+      if (wanted && T.CATEGORIES.some(c => c.value === wanted)) {
+        categoryFilter.value = wanted;
+        markActiveCategory(wanted);
+      }
+      loadVideos();
+    }
+    if (page === "home" || page === "channels") loadChannels();
+    if (page === "account") {
+      updateAccount();
+      T.client.auth.onAuthStateChange(event => {
+        if (event === "SIGNED_IN" || event === "SIGNED_OUT") updateAccount();
+      });
+    }
+  }
+  </script>
+</body>
+</html>

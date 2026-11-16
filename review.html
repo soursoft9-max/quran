@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#123f35">
+  <title>مراجعة التلاوات | تِبيان</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #123f35; --green-dark: #0b2c25; --green-light: #1d5a49;
+      --gold: #c6a45b; --gold-light: #e4cc8e; --cream: #f8f6ef;
+      --text: #26352c; --muted: #68766c; --danger: #a52d27; --white: #fff;
+      --border: #e2e9df;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Cairo", Tahoma, sans-serif; background: var(--cream); color: var(--text); line-height: 1.8; }
+    a { color: inherit; }
+    header, footer { background: var(--green-dark); color: white; padding: 16px 6%; }
+    header { border-bottom: 3px solid var(--gold); }
+    .topbar { max-width: 1150px; margin: auto; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; }
+    .brand { color: var(--gold-light); font-family: "Amiri", serif; font-size: 29px; font-weight: 700; text-decoration: none; }
+    .top-links { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; }
+    .top-links a { color: white; text-decoration: none; }
+    .top-links a:hover, .top-links a[aria-current="page"] { color: var(--gold-light); }
+
+    main { width: min(1100px, calc(100% - 32px)); margin: 30px auto; }
+    .welcome, .panel { background: var(--white); border-radius: 16px; padding: 24px; margin-bottom: 22px; box-shadow: 0 6px 24px #173b2910; border: 1px solid #edf0ea; }
+    h1, h2, h3 { color: var(--green); }
+    h1 { margin-top: 0; font-family: "Amiri", serif; font-size: 34px; line-height: 1.4; }
+    h2 { font-size: 20px; margin-top: 0; }
+    .muted { color: var(--muted); }
+    small.muted { display: block; font-size: 12px; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-bottom: 22px; }
+    .stat { background: #f2f5ef; padding: 16px; border-radius: 12px; border: 1px solid var(--border); font-size: 13px; }
+    .stat strong { display: block; color: var(--green); font-size: 25px; }
+
+    .button { border: 0; border-radius: 9px; padding: 9px 16px; background: var(--green); color: white; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-block; }
+    .button:hover { background: var(--green-light); }
+    .button.secondary { background: #e8ede7; color: var(--green); }
+    .button.secondary:hover { background: #dde5db; }
+    .button.gold { background: var(--gold); color: var(--green-dark); }
+    .button.danger { background: var(--danger); }
+    .button.danger:hover { background: #8c241f; }
+    .button:disabled { opacity: .55; cursor: not-allowed; }
+
+    .actions { display: flex; gap: 9px; flex-wrap: wrap; align-items: center; }
+    .field { margin-bottom: 14px; }
+    label { display: block; font-weight: 700; margin-bottom: 5px; font-size: 14px; }
+    input, select, textarea { display: block; width: 100%; padding: 10px 11px; border: 1px solid #d4ddd3; border-radius: 9px; background: white; color: var(--text); font: inherit; font-size: 14px; }
+    input:focus, select:focus, textarea:focus { outline: 2px solid #d9ad5580; border-color: var(--green); }
+    textarea { min-height: 84px; resize: vertical; }
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 14px; }
+    .full-width { grid-column: 1 / -1; }
+
+    .notice { background: #f8f0dc; color: #70541e; padding: 12px 16px; border-radius: 10px; margin-top: 14px; overflow-wrap: anywhere; font-size: 14px; }
+    .notice.error { background: #fbe9e7; color: var(--danger); }
+    .notice.success { background: #e8f5e9; color: #205b32; }
+
+    .list { display: grid; gap: 14px; }
+    .item { border: 1px solid var(--border); border-radius: 12px; padding: 16px; background: #fff; }
+    .item h3 { margin: 0 0 4px; font-size: 17px; overflow-wrap: anywhere; }
+    .item p { margin: 4px 0; overflow-wrap: anywhere; font-size: 14px; }
+    .item-head { display: flex; justify-content: space-between; align-items: start; gap: 12px; flex-wrap: wrap; }
+    .item-meta { display: flex; flex-wrap: wrap; gap: 6px 14px; color: var(--muted); font-size: 12px; }
+
+    .badge { display: inline-block; padding: 2px 11px; border-radius: 20px; background: #e8ede7; color: var(--green); font-size: 12px; font-weight: 700; white-space: nowrap; }
+    .badge.pending { background: #fff2d6; color: #7a5a14; }
+    .badge.published, .badge.approved { background: #e3f3e6; color: #1f5c31; }
+    .badge.rejected, .badge.suspended { background: #fbe9e7; color: var(--danger); }
+    .badge.draft { background: #eceeea; color: #555f58; }
+    .badge.ready { background: var(--green); color: var(--gold-light); }
+
+    .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .tab { border: 1px solid #d9e2d6; background: white; color: var(--green); border-radius: 30px; padding: 6px 15px; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+    .tab.active { background: var(--green); color: white; border-color: var(--green); }
+
+    .player-slot { margin: 12px 0; }
+    .player-slot video { width: 100%; max-height: 420px; background: black; border-radius: 10px; display: block; }
+    .player-slot audio { width: 100%; }
+    .thumb-preview { width: 160px; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px; border: 1px solid var(--border); background: #eef2ec; }
+
+    .votes { margin: 10px 0; padding: 10px 12px; background: #f7f8f4; border-radius: 10px; font-size: 13px; }
+    .votes ul { margin: 6px 0 0; padding-inline-start: 18px; }
+    .votes li { margin: 3px 0; }
+    .vote-approve { color: #1f5c31; font-weight: 700; }
+    .vote-reject { color: var(--danger); font-weight: 700; }
+
+    .decision { margin-top: 12px; padding-top: 12px; border-top: 1px dashed #dfe4dc; display: grid; gap: 8px; }
+    .decision.admin { background: #fbf7ea; border: 1px solid #efe2bb; border-radius: 10px; padding: 12px; }
+    .decision textarea { min-height: 60px; }
+
+    .checklist { margin: 0; padding-inline-start: 20px; font-size: 14px; color: #4b5a51; }
+    .checklist li { margin: 3px 0; }
+
+    .inline-form { display: flex; gap: 8px; flex-wrap: wrap; align-items: end; }
+    .inline-form input, .inline-form select { width: auto; flex: 1; min-width: 200px; }
+
+    [hidden] { display: none !important; }
+    footer { text-align: center; font-size: 12px; }
+    footer span { color: var(--gold-light); }
+
+    @media (max-width: 640px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .welcome, .panel { padding: 17px; }
+      h1 { font-size: 29px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="topbar">
+      <a class="brand" href="index.html">تِبيان</a>
+      <div class="top-links">
+        <a href="index.html">الموقع</a>
+        <a href="account.html">حسابي</a>
+        <a href="review.html" aria-current="page">المراجعة</a>
+        <a href="admin.html" data-role-link="admin" hidden>الإدارة</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="welcome">
+      <h1>مراجعة التلاوات قبل النشر</h1>
+      <p class="muted" id="intro">
+        جزاكم الله خيرًا على خدمة كتاب الله. استمعوا إلى التلاوة كاملة قبل التصويت.
+      </p>
+      <div id="statusMessage" class="notice" role="status" aria-live="polite">جارٍ التحقق من الصلاحيات...</div>
+    </section>
+
+    <div id="workspace" hidden>
+      <div class="grid">
+        <div class="stat">قيد المراجعة<strong id="countPending">—</strong></div>
+        <div class="stat">بانتظار صوتك<strong id="countMine">—</strong></div>
+        <div class="stat">جاهزة لقرار الإدارة<strong id="countReady">—</strong></div>
+        <div class="stat">الموافقات المطلوبة<strong id="countRequired">—</strong></div>
+      </div>
+
+      <section class="panel">
+        <h2>معايير المراجعة</h2>
+        <ul class="checklist">
+          <li>سلامة التلاوة من اللحن الجلي، وصحة الأحكام الظاهرة.</li>
+          <li>خلوّ التسجيل من الموسيقى والمؤثرات غير اللائقة.</li>
+          <li>مطابقة العنوان واسم القارئ والتصنيف لمحتوى التلاوة.</li>
+          <li>ملاءمة الصورة المصغرة والوصف، وخلوّهما من أي محتوى مخالف.</li>
+          <li>وضوح الصوت وجودته بما يليق بكلام الله.</li>
+        </ul>
+      </section>
+
+      <section class="panel">
+        <div class="tabs" id="tabs">
+          <button class="tab active" data-filter="mine" type="button">بانتظار صوتي</button>
+          <button class="tab" data-filter="voted" type="button">صوّتُّ عليها</button>
+          <button class="tab" data-filter="ready" type="button">جاهزة لقرار الإدارة</button>
+          <button class="tab" data-filter="all" type="button">كل قيد المراجعة</button>
+          <button class="button secondary" id="refreshButton" type="button" style="margin-inline-start:auto">تحديث</button>
+        </div>
+        <div id="listMessage" class="notice" hidden></div>
+        <div id="queue" class="list"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer>تِبيان — <span>نورٌ يُتلى، وعلمٌ يُرتقى</span></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="tibyan.js"></script>
+  <script>
+  "use strict";
+  const T = window.Tibyan;
+  const $ = id => document.getElementById(id);
+
+  let roles = null;
+  let me = null;
+  let required = 1;
+  let queue = [];
+  let reviewsByVideo = new Map();
+  let channelsByUser = new Map();
+  let volunteerEmails = new Map();
+  let filter = "mine";
+
+  function setStatus(text, type = "") {
+    const box = $("statusMessage");
+    box.className = "notice" + (type ? " " + type : "");
+    box.textContent = text;
+  }
+
+  function el(tag, className, text) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== undefined) node.textContent = text;
+    return node;
+  }
+
+  function approvalsOf(video) {
+    return (reviewsByVideo.get(String(video.id)) || []).filter(r =>
+      r.decision === "approve" && r.reviewer_role === "volunteer" && r.reviewer_id !== video.user_id).length;
+  }
+
+  function myReview(video) {
+    return (reviewsByVideo.get(String(video.id)) || []).find(r => r.reviewer_id === me.id);
+  }
+
+  function isReady(video) {
+    return approvalsOf(video) >= required;
+  }
+
+  async function loadQueue() {
+    $("listMessage").hidden = true;
+
+    const { data: videos, error } = await T.client
+      .from("videos")
+      .select(T.VIDEO_COLUMNS)
+      .eq("status", "pending")
+      .order("created_at", { ascending: true });
+
+    if (error) {
+      showListMessage("تعذّر تحميل التلاوات: " + T.friendlyError(error), true);
+      return;
+    }
+    queue = videos || [];
+
+    reviewsByVideo = new Map();
+    if (queue.length) {
+      const ids = queue.map(v => v.id);
+      const { data: reviews, error: revError } = await T.client
+        .from("video_reviews")
+        .select("video_id,reviewer_id,reviewer_role,decision,notes,updated_at")
+        .in("video_id", ids);
+      if (revError) console.error(revError);
+      (reviews || []).forEach(r => {
+        const key = String(r.video_id);
+        if (!reviewsByVideo.has(key)) reviewsByVideo.set(key, []);
+        reviewsByVideo.get(key).push(r);
+      });
+
+      const userIds = [...new Set(queue.map(v => v.user_id).filter(Boolean))];
+      if (userIds.length) {
+        const { data: channels } = await T.client
+          .from("channels").select("user_id,channel_name").in("user_id", userIds);
+        channelsByUser = new Map((channels || []).map(c => [c.user_id, c.channel_name]));
+      }
+    }
+
+    $("countPending").textContent = queue.length;
+    $("countMine").textContent = queue.filter(v => v.user_id !== me.id && !myReview(v)).length;
+    $("countReady").textContent = queue.filter(isReady).length;
+    $("countRequired").textContent = required;
+    render();
+  }
+
+  function showListMessage(text, isError = false) {
+    const box = $("listMessage");
+    box.hidden = false;
+    box.className = "notice" + (isError ? " error" : "");
+    box.textContent = text;
+  }
+
+  function render() {
+    const list = $("queue");
+    list.replaceChildren();
+
+    const items = queue.filter(v => {
+      if (filter === "mine") return v.user_id !== me.id && !myReview(v);
+      if (filter === "voted") return !!myReview(v);
+      if (filter === "ready") return isReady(v);
+      return true;
+    });
+
+    if (!items.length) {
+      showListMessage({
+        mine: "لا توجد تلاوات بانتظار صوتك الآن. جزاك الله خيرًا.",
+        voted: "لم تصوّت على أي تلاوة قيد المراجعة.",
+        ready: "لا توجد تلاوات اكتملت موافقاتها بعد.",
+        all: "لا توجد تلاوات قيد المراجعة."
+      }[filter]);
+      return;
+    }
+    $("listMessage").hidden = true;
+    items.forEach(video => list.appendChild(renderItem(video)));
+  }
+
+  function renderItem(video) {
+    const card = el("article", "item");
+    const own = video.user_id === me.id;
+    const approvals = approvalsOf(video);
+    const reviews = reviewsByVideo.get(String(video.id)) || [];
+    const rejects = reviews.filter(r => r.decision === "reject").length;
+
+    const head = el("div", "item-head");
+    head.appendChild(el("h3", "", video.title || "تلاوة بلا عنوان"));
+    const badge = el("span", "badge " + (isReady(video) ? "ready" : "pending"),
+      isReady(video) ? "جاهزة لقرار الإدارة" : "موافقات " + approvals + " من " + required);
+    head.appendChild(badge);
+    card.appendChild(head);
+
+    const meta = el("div", "item-meta");
+    [
+      "القارئ: " + (video.reader_name || "—"),
+      "التصنيف: " + T.categoryLabel(video.category),
+      "القناة: " + (channelsByUser.get(video.user_id) || (own ? "أنت" : "—")),
+      "أُرسلت: " + T.formatDate(video.created_at)
+    ].forEach(t => meta.appendChild(el("span", "", t)));
+    card.appendChild(meta);
+
+    if (video.description) card.appendChild(el("p", "", video.description));
+
+    // المشغّل يُحمَّل عند الطلب فقط
+    const slot = el("div", "player-slot");
+    const listen = el("button", "button secondary", "🎧 استماع للمراجعة");
+    listen.type = "button";
+    listen.addEventListener("click", async () => {
+      listen.disabled = true;
+      listen.textContent = "جارٍ التحميل...";
+      await mountPlayer(video, slot);
+      listen.remove();
+    });
+    slot.appendChild(listen);
+    card.appendChild(slot);
+
+    // ملخص الأصوات
+    const votes = el("div", "votes");
+    votes.appendChild(el("strong", "", "الأصوات: " + approvals + " موافقة من متطوعين، " + rejects + " رفض"));
+    if (reviews.length) {
+      const ul = el("ul");
+      reviews.forEach(r => {
+        const li = el("li");
+        const who = r.reviewer_id === me.id ? "أنت"
+          : (volunteerEmails.get(r.reviewer_id) || (r.reviewer_role === "admin" ? "الإدارة" : "متطوع"));
+        li.appendChild(el("span", r.decision === "approve" ? "vote-approve" : "vote-reject",
+          (r.decision === "approve" ? "✓ موافقة" : "✗ رفض")));
+        li.append(" — " + who + (r.notes ? ": " + r.notes : ""));
+        ul.appendChild(li);
+      });
+      votes.appendChild(ul);
+    }
+    card.appendChild(votes);
+
+    // تصويت المراجع
+    const decision = el("div", "decision");
+    if (own) {
+      decision.appendChild(el("p", "muted", "هذه تلاوتك، ولا يمكنك التصويت عليها."));
+    } else {
+      const current = myReview(video);
+      if (current) {
+        decision.appendChild(el("p", "muted",
+          "صوتك الحالي: " + (current.decision === "approve" ? "موافقة" : "رفض") + " — يمكنك تغييره."));
+      }
+      const notes = el("textarea");
+      notes.placeholder = "ملاحظاتك (إلزامية عند الرفض): مثل موضع الخطأ أو سبب عدم الملاءمة";
+      notes.maxLength = 1000;
+      if (current && current.notes) notes.value = current.notes;
+
+      const row = el("div", "actions");
+      const approve = el("button", "button", "✓ موافقة على النشر");
+      const reject = el("button", "button danger", "✗ رفض");
+      approve.type = reject.type = "button";
+      approve.addEventListener("click", () => vote(video, "approve", notes.value, [approve, reject]));
+      reject.addEventListener("click", () => vote(video, "reject", notes.value, [approve, reject]));
+      row.append(approve, reject);
+      decision.append(notes, row);
+    }
+    card.appendChild(decision);
+
+    // قرار الإدارة النهائي
+    if (roles.is_admin) {
+      const box = el("div", "decision admin");
+      box.appendChild(el("strong", "", "القرار النهائي للإدارة"));
+      if (!isReady(video)) {
+        box.appendChild(el("p", "muted",
+          "لا يمكن النشر قبل اكتمال موافقات المتطوعين (" + approvals + " من " + required + ")."));
+      }
+      const note = el("textarea");
+      note.placeholder = "ملاحظة لصاحب التلاوة (إلزامية عند الرفض)";
+      note.maxLength = 1000;
+      const row = el("div", "actions");
+      const publish = el("button", "button gold", "اعتماد ونشر");
+      const rejectFinal = el("button", "button danger", "رفض نهائي");
+      publish.type = rejectFinal.type = "button";
+      publish.disabled = !isReady(video);
+      publish.addEventListener("click", () => decide(video, "publish", note.value, [publish, rejectFinal]));
+      rejectFinal.addEventListener("click", () => decide(video, "reject", note.value, [publish, rejectFinal]));
+      row.append(publish, rejectFinal);
+      box.append(note, row);
+      card.appendChild(box);
+    }
+
+    return card;
+  }
+
+  async function mountPlayer(video, slot) {
+    const youtubeId = T.getYouTubeId(video.video_url);
+    if (youtubeId) {
+      const a = el("a", "button secondary", "فتح الرابط على يوتيوب");
+      a.href = "https://www.youtube.com/watch?v=" + youtubeId;
+      a.target = "_blank";
+      slot.appendChild(a);
+      return;
+    }
+
+    const path = T.storagePath(video.video_url);
+    const thumbPath = T.storagePath(video.thumbnail_url);
+    const urls = await T.signedUrls([path, thumbPath].filter(Boolean), 60 * 60);
+    const url = urls.get(path) || (T.isHttpUrl(video.video_url || "") ? video.video_url : "");
+
+    if (thumbPath && urls.get(thumbPath)) {
+      const img = el("img", "thumb-preview");
+      img.src = urls.get(thumbPath);
+      img.alt = "الصورة المصغرة";
+      slot.appendChild(img);
+    }
+
+    if (!url) {
+      slot.appendChild(el("p", "notice error", "تعذّر الوصول إلى ملف التلاوة."));
+      return;
+    }
+    const media = el(T.isAudioPath(path || url) ? "audio" : "video");
+    media.controls = true;
+    media.preload = "metadata";
+    media.src = url;
+    slot.appendChild(media);
+  }
+
+  async function vote(video, decision, notes, buttons) {
+    if (decision === "reject" && !notes.trim()) {
+      alert("يرجى كتابة سبب الرفض.");
+      return;
+    }
+    buttons.forEach(b => b.disabled = true);
+    const { error } = await T.client.rpc("submit_video_review", {
+      p_video_id: String(video.id),
+      p_decision: decision,
+      p_notes: notes.trim() || null
+    });
+    if (error) {
+      alert("تعذّر تسجيل الصوت: " + T.friendlyError(error));
+      buttons.forEach(b => b.disabled = false);
+      return;
+    }
+    await loadQueue();
+  }
+
+  async function decide(video, decision, note, buttons) {
+    if (decision === "reject" && !note.trim()) {
+      alert("يرجى كتابة سبب الرفض ليصل إلى صاحب التلاوة.");
+      return;
+    }
+    const question = decision === "publish"
+      ? "اعتماد التلاوة «" + (video.title || "") + "» ونشرها للزوار؟"
+      : "رفض التلاوة «" + (video.title || "") + "» نهائيًا؟";
+    if (!confirm(question)) return;
+
+    buttons.forEach(b => b.disabled = true);
+    const { error } = await T.client.rpc("admin_decide_video", {
+      p_video_id: String(video.id),
+      p_decision: decision,
+      p_note: note.trim() || null
+    });
+    if (error) {
+      alert("تعذّر تنفيذ القرار: " + T.friendlyError(error));
+      buttons.forEach(b => b.disabled = false);
+      return;
+    }
+    await loadQueue();
+  }
+
+  $("tabs").addEventListener("click", event => {
+    const tab = event.target.closest("[data-filter]");
+    if (!tab) return;
+    filter = tab.dataset.filter;
+    document.querySelectorAll("#tabs .tab").forEach(t => t.classList.toggle("active", t === tab));
+    render();
+  });
+  $("refreshButton").addEventListener("click", loadQueue);
+
+  async function init() {
+    if (!T.client) {
+      setStatus("تعذّر تحميل مكتبة الاتصال.", "error");
+      return;
+    }
+    roles = await T.getMyRoles();
+    if (!roles.user) {
+      $("statusMessage").innerHTML = 'يجب تسجيل الدخول أولًا. <a href="' + T.loginUrl() + '">تسجيل الدخول</a>';
+      $("statusMessage").className = "notice error";
+      return;
+    }
+    if (roles.setupMissing) {
+      setStatus(T.friendlyError(roles.error), "error");
+      return;
+    }
+    if (!roles.is_volunteer && !roles.is_admin) {
+      setStatus("هذه الصفحة خاصة بالمتطوعين المعتمدين وإدارة تِبيان. للتطوع تواصل مع الإدارة.", "error");
+      return;
+    }
+
+    me = roles.user;
+    required = Number(roles.required_approvals ?? 1);
+    document.querySelectorAll('[data-role-link="admin"]').forEach(a => a.hidden = !roles.is_admin);
+    setStatus("الحساب: " + (me.email || "") + " — " +
+      (roles.is_admin ? "إدارة" + (roles.is_volunteer ? " ومتطوع" : "") : "متطوع مراجع"), "success");
+
+    if (roles.is_admin) {
+      const { data } = await T.client.from("volunteers").select("user_id,email");
+      volunteerEmails = new Map((data || []).map(v => [v.user_id, v.email]));
+      $("intro").textContent += " بصفتك مديرًا، يظهر لك أيضًا القرار النهائي بعد اكتمال موافقات المتطوعين.";
+    }
+
+    $("workspace").hidden = false;
+    await loadQueue();
+  }
+
+  init().catch(error => {
+    console.error(error);
+    setStatus("حدث خطأ غير متوقع: " + T.friendlyError(error), "error");
+  });
+  </script>
+</body>
+</html>

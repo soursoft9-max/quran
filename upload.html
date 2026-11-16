@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#123f35">
+  <title>رفع تلاوة | تِبيان</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #123f35; --green-dark: #0b2c25; --green-light: #1d5a49;
+      --gold: #c6a45b; --gold-light: #e4cc8e; --cream: #f8f6ef;
+      --text: #26352c; --muted: #68766c; --danger: #a52d27; --white: #fff;
+      --border: #e2e9df;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Cairo", Tahoma, sans-serif; background: var(--cream); color: var(--text); line-height: 1.8; }
+    a { color: inherit; }
+    header, footer { background: var(--green-dark); color: white; padding: 16px 6%; }
+    header { border-bottom: 3px solid var(--gold); }
+    .topbar { max-width: 1150px; margin: auto; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; }
+    .brand { color: var(--gold-light); font-family: "Amiri", serif; font-size: 29px; font-weight: 700; text-decoration: none; }
+    .top-links { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; }
+    .top-links a { color: white; text-decoration: none; }
+    .top-links a:hover, .top-links a[aria-current="page"] { color: var(--gold-light); }
+
+    main { width: min(1100px, calc(100% - 32px)); margin: 30px auto; }
+    .welcome, .panel { background: var(--white); border-radius: 16px; padding: 24px; margin-bottom: 22px; box-shadow: 0 6px 24px #173b2910; border: 1px solid #edf0ea; }
+    h1, h2, h3 { color: var(--green); }
+    h1 { margin-top: 0; font-family: "Amiri", serif; font-size: 34px; line-height: 1.4; }
+    h2 { font-size: 20px; margin-top: 0; }
+    .muted { color: var(--muted); }
+    small.muted { display: block; font-size: 12px; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-bottom: 22px; }
+    .stat { background: #f2f5ef; padding: 16px; border-radius: 12px; border: 1px solid var(--border); font-size: 13px; }
+    .stat strong { display: block; color: var(--green); font-size: 25px; }
+
+    .button { border: 0; border-radius: 9px; padding: 9px 16px; background: var(--green); color: white; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-block; }
+    .button:hover { background: var(--green-light); }
+    .button.secondary { background: #e8ede7; color: var(--green); }
+    .button.secondary:hover { background: #dde5db; }
+    .button.gold { background: var(--gold); color: var(--green-dark); }
+    .button.danger { background: var(--danger); }
+    .button.danger:hover { background: #8c241f; }
+    .button:disabled { opacity: .55; cursor: not-allowed; }
+
+    .actions { display: flex; gap: 9px; flex-wrap: wrap; align-items: center; }
+    .field { margin-bottom: 14px; }
+    label { display: block; font-weight: 700; margin-bottom: 5px; font-size: 14px; }
+    input, select, textarea { display: block; width: 100%; padding: 10px 11px; border: 1px solid #d4ddd3; border-radius: 9px; background: white; color: var(--text); font: inherit; font-size: 14px; }
+    input:focus, select:focus, textarea:focus { outline: 2px solid #d9ad5580; border-color: var(--green); }
+    textarea { min-height: 84px; resize: vertical; }
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 14px; }
+    .full-width { grid-column: 1 / -1; }
+
+    .notice { background: #f8f0dc; color: #70541e; padding: 12px 16px; border-radius: 10px; margin-top: 14px; overflow-wrap: anywhere; font-size: 14px; }
+    .notice.error { background: #fbe9e7; color: var(--danger); }
+    .notice.success { background: #e8f5e9; color: #205b32; }
+
+    .list { display: grid; gap: 14px; }
+    .item { border: 1px solid var(--border); border-radius: 12px; padding: 16px; background: #fff; }
+    .item h3 { margin: 0 0 4px; font-size: 17px; overflow-wrap: anywhere; }
+    .item p { margin: 4px 0; overflow-wrap: anywhere; font-size: 14px; }
+    .item-head { display: flex; justify-content: space-between; align-items: start; gap: 12px; flex-wrap: wrap; }
+    .item-meta { display: flex; flex-wrap: wrap; gap: 6px 14px; color: var(--muted); font-size: 12px; }
+
+    .badge { display: inline-block; padding: 2px 11px; border-radius: 20px; background: #e8ede7; color: var(--green); font-size: 12px; font-weight: 700; white-space: nowrap; }
+    .badge.pending { background: #fff2d6; color: #7a5a14; }
+    .badge.published, .badge.approved { background: #e3f3e6; color: #1f5c31; }
+    .badge.rejected, .badge.suspended { background: #fbe9e7; color: var(--danger); }
+    .badge.draft { background: #eceeea; color: #555f58; }
+    .badge.ready { background: var(--green); color: var(--gold-light); }
+
+    .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .tab { border: 1px solid #d9e2d6; background: white; color: var(--green); border-radius: 30px; padding: 6px 15px; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+    .tab.active { background: var(--green); color: white; border-color: var(--green); }
+
+    .player-slot { margin: 12px 0; }
+    .player-slot video { width: 100%; max-height: 420px; background: black; border-radius: 10px; display: block; }
+    .player-slot audio { width: 100%; }
+    .thumb-preview { width: 160px; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px; border: 1px solid var(--border); background: #eef2ec; }
+
+    .votes { margin: 10px 0; padding: 10px 12px; background: #f7f8f4; border-radius: 10px; font-size: 13px; }
+    .votes ul { margin: 6px 0 0; padding-inline-start: 18px; }
+    .votes li { margin: 3px 0; }
+    .vote-approve { color: #1f5c31; font-weight: 700; }
+    .vote-reject { color: var(--danger); font-weight: 700; }
+
+    .decision { margin-top: 12px; padding-top: 12px; border-top: 1px dashed #dfe4dc; display: grid; gap: 8px; }
+    .decision.admin { background: #fbf7ea; border: 1px solid #efe2bb; border-radius: 10px; padding: 12px; }
+    .decision textarea { min-height: 60px; }
+
+    .checklist { margin: 0; padding-inline-start: 20px; font-size: 14px; color: #4b5a51; }
+    .checklist li { margin: 3px 0; }
+
+    .inline-form { display: flex; gap: 8px; flex-wrap: wrap; align-items: end; }
+    .inline-form input, .inline-form select { width: auto; flex: 1; min-width: 200px; }
+
+    [hidden] { display: none !important; }
+    footer { text-align: center; font-size: 12px; }
+    footer span { color: var(--gold-light); }
+
+    @media (max-width: 640px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .welcome, .panel { padding: 17px; }
+      h1 { font-size: 29px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="topbar">
+      <a class="brand" href="index.html">تِبيان</a>
+      <div class="top-links">
+        <a href="index.html">الموقع</a>
+        <a href="account.html">حسابي</a>
+        <a href="upload.html" aria-current="page">رفع تلاوة</a>
+        <a href="review.html" data-role-link="reviewer" hidden>المراجعة</a>
+        <a href="admin.html" data-role-link="admin" hidden>الإدارة</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="welcome">
+      <h1>رفع تلاوة جديدة</h1>
+      <p class="muted">
+        بعد الرفع تصبح التلاوة «قيد المراجعة». يستمع إليها المتطوعون، ثم تعتمدها
+        إدارة تِبيان، وبعدها فقط تظهر للزوار. أي تعديل على تلاوة منشورة يعيدها إلى المراجعة.
+      </p>
+      <div id="statusMessage" class="notice" role="status" aria-live="polite">جارٍ التحقق من الحساب...</div>
+    </section>
+
+    <div id="workspace" hidden>
+      <section class="panel" id="formPanel">
+        <h2 id="formTitle">بيانات التلاوة</h2>
+        <form id="videoForm">
+          <div class="form-grid">
+            <div class="field">
+              <label for="videoTitle">عنوان التلاوة *</label>
+              <input id="videoTitle" required maxlength="200" placeholder="مثال: سورة الرحمن كاملة">
+            </div>
+            <div class="field">
+              <label for="readerName">اسم القارئ *</label>
+              <input id="readerName" required maxlength="150" placeholder="اسم القارئ">
+            </div>
+            <div class="field">
+              <label for="category">التصنيف *</label>
+              <select id="category" required></select>
+            </div>
+            <div class="field">
+              <label for="submitMode">بعد الحفظ</label>
+              <select id="submitMode">
+                <option value="pending">إرسال للمراجعة</option>
+                <option value="draft">حفظ كمسودة (لا تُرسل للمراجعة)</option>
+              </select>
+            </div>
+            <div class="field full-width">
+              <label for="description">وصف التلاوة</label>
+              <textarea id="description" maxlength="3000" placeholder="السورة، الآيات، مكان التسجيل... (اختياري)"></textarea>
+            </div>
+            <div class="field full-width">
+              <label for="videoFile">ملف الصوت أو الفيديو <span id="fileRequired">*</span></label>
+              <input id="videoFile" type="file" accept="audio/*,video/*">
+              <small class="muted" id="fileHint">الصيغ المقبولة: ملفات الصوت والفيديو. عند التعديل اتركه فارغًا للاحتفاظ بالملف الحالي.</small>
+            </div>
+            <div class="field full-width">
+              <label for="thumbnailFile">الصورة المصغرة (اختياري)</label>
+              <input id="thumbnailFile" type="file" accept="image/*">
+              <small class="muted">تُراجع الصورة أيضًا. لا تُستخدم صور الأشخاص أو صور غير لائقة.</small>
+            </div>
+            <div class="field full-width">
+              <label style="display:flex;gap:8px;align-items:start;font-weight:600">
+                <input id="pledge" type="checkbox" required style="width:auto;margin-top:7px">
+                أتعهد بأن التلاوة صحيحة وخالية من الموسيقى، وأن لي حق نشرها، وأوافق على
+                <a href="policy.html" target="_blank">سياسة المحتوى</a>.
+              </label>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="button" id="saveButton" type="submit">رفع وإرسال للمراجعة</button>
+            <button class="button secondary" id="cancelEdit" type="button" hidden>إلغاء التعديل</button>
+          </div>
+          <div id="formMessage" class="notice" hidden role="status" aria-live="polite"></div>
+        </form>
+      </section>
+
+      <section class="panel">
+        <h2>تلاواتي</h2>
+        <div class="tabs" id="tabs">
+          <button class="tab active" data-filter="all" type="button">الكل</button>
+          <button class="tab" data-filter="pending" type="button">قيد المراجعة</button>
+          <button class="tab" data-filter="published" type="button">منشورة</button>
+          <button class="tab" data-filter="rejected" type="button">مرفوضة</button>
+          <button class="tab" data-filter="draft" type="button">مسودات</button>
+        </div>
+        <div id="listMessage" class="notice" hidden></div>
+        <div id="videoList" class="list"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer>تِبيان — <span>نورٌ يُتلى، وعلمٌ يُرتقى</span></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="tibyan.js"></script>
+  <script>
+  "use strict";
+  const T = window.Tibyan;
+  const $ = id => document.getElementById(id);
+
+  const statusMessage = $("statusMessage");
+  const form = $("videoForm");
+  const formMessage = $("formMessage");
+  const saveButton = $("saveButton");
+
+  let user = null;
+  let myVideos = [];
+  let editing = null;
+  let filter = "all";
+  let saving = false;
+
+  const MAX_MB = 500;
+
+  function setStatus(text, type = "") {
+    statusMessage.hidden = false;
+    statusMessage.className = "notice" + (type ? " " + type : "");
+    statusMessage.textContent = text;
+  }
+
+  function setFormMessage(text, type = "") {
+    formMessage.hidden = false;
+    formMessage.className = "notice" + (type ? " " + type : "");
+    formMessage.textContent = text;
+  }
+
+  function updateSaveLabel() {
+    const draft = $("submitMode").value === "draft";
+    if (editing) saveButton.textContent = draft ? "حفظ التعديلات كمسودة" : "حفظ التعديلات وإعادة الإرسال للمراجعة";
+    else saveButton.textContent = draft ? "رفع وحفظ كمسودة" : "رفع وإرسال للمراجعة";
+  }
+
+  function resetForm() {
+    editing = null;
+    form.reset();
+    $("formTitle").textContent = "بيانات التلاوة";
+    $("cancelEdit").hidden = true;
+    $("fileRequired").hidden = false;
+    updateSaveLabel();
+  }
+
+  function startEdit(video) {
+    editing = video;
+    $("formTitle").textContent = "تعديل: " + (video.title || "");
+    $("videoTitle").value = video.title || "";
+    $("readerName").value = video.reader_name || "";
+    $("category").value = video.category || "";
+    $("description").value = video.description || "";
+    $("submitMode").value = video.status === "draft" ? "draft" : "pending";
+    $("cancelEdit").hidden = false;
+    $("fileRequired").hidden = true;
+    formMessage.hidden = true;
+    updateSaveLabel();
+    if (video.status === "published") {
+      setFormMessage("تنبيه: حفظ أي تعديل على تلاوة منشورة سيخفيها عن الزوار ويعيدها إلى المراجعة.");
+    }
+    $("formPanel").scrollIntoView({ behavior: "smooth" });
+  }
+
+  async function loadMyVideos() {
+    const { data, error } = await T.client
+      .from("videos")
+      .select(T.VIDEO_COLUMNS + ",review_note,reviewed_at")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      $("listMessage").hidden = false;
+      $("listMessage").className = "notice error";
+      $("listMessage").textContent = "تعذّر تحميل تلاواتك: " + T.friendlyError(error);
+      return;
+    }
+    myVideos = data || [];
+    renderList();
+  }
+
+  function renderList() {
+    const list = $("videoList");
+    const items = myVideos.filter(v => filter === "all" || v.status === filter);
+    list.replaceChildren();
+
+    $("listMessage").hidden = items.length > 0;
+    if (!items.length) {
+      $("listMessage").className = "notice";
+      $("listMessage").textContent = myVideos.length ? "لا توجد تلاوات بهذه الحالة." : "لم ترفع أي تلاوة بعد.";
+      return;
+    }
+
+    items.forEach(video => {
+      const card = document.createElement("article");
+      card.className = "item";
+
+      const head = document.createElement("div");
+      head.className = "item-head";
+      const title = document.createElement("h3");
+      title.textContent = video.title || "تلاوة بلا عنوان";
+      const badge = document.createElement("span");
+      badge.className = "badge " + video.status;
+      badge.textContent = T.STATUS_LABELS[video.status] || video.status;
+      head.append(title, badge);
+
+      const meta = document.createElement("div");
+      meta.className = "item-meta";
+      [
+        "القارئ: " + (video.reader_name || "—"),
+        "التصنيف: " + T.categoryLabel(video.category),
+        "أُضيفت: " + T.formatDate(video.created_at)
+      ].forEach(text => {
+        const s = document.createElement("span");
+        s.textContent = text;
+        meta.appendChild(s);
+      });
+      card.append(head, meta);
+
+      if (video.status === "pending") {
+        const p = document.createElement("p");
+        p.className = "muted";
+        p.textContent = "بانتظار مراجعة المتطوعين واعتماد الإدارة.";
+        card.appendChild(p);
+      }
+      if (video.review_note) {
+        const note = document.createElement("div");
+        note.className = "notice" + (video.status === "rejected" ? " error" : "");
+        note.textContent = (video.status === "rejected" ? "سبب الرفض: " : "ملاحظة الإدارة: ") + video.review_note;
+        card.appendChild(note);
+      }
+
+      const actions = document.createElement("div");
+      actions.className = "actions";
+      actions.style.marginTop = "12px";
+
+      const preview = document.createElement("a");
+      preview.className = "button secondary";
+      preview.href = T.watchUrl(video);
+      preview.textContent = video.status === "published" ? "عرض" : "معاينة";
+      actions.appendChild(preview);
+
+      const edit = document.createElement("button");
+      edit.type = "button";
+      edit.className = "button secondary";
+      edit.textContent = video.status === "rejected" ? "تعديل وإعادة الإرسال" : "تعديل";
+      edit.addEventListener("click", () => startEdit(video));
+      actions.appendChild(edit);
+
+      if (video.status === "draft" || video.status === "rejected") {
+        const send = document.createElement("button");
+        send.type = "button";
+        send.className = "button";
+        send.textContent = "إرسال للمراجعة";
+        send.addEventListener("click", () => changeStatus(video, "pending"));
+        actions.appendChild(send);
+      }
+      if (video.status === "published" || video.status === "pending") {
+        const withdraw = document.createElement("button");
+        withdraw.type = "button";
+        withdraw.className = "button secondary";
+        withdraw.textContent = video.status === "published" ? "إخفاء (مسودة)" : "سحب من المراجعة";
+        withdraw.addEventListener("click", () => changeStatus(video, "draft"));
+        actions.appendChild(withdraw);
+      }
+
+      const del = document.createElement("button");
+      del.type = "button";
+      del.className = "button danger";
+      del.textContent = "حذف";
+      del.addEventListener("click", () => removeVideo(video));
+      actions.appendChild(del);
+
+      card.appendChild(actions);
+      list.appendChild(card);
+    });
+  }
+
+  async function changeStatus(video, status) {
+    const { error } = await T.client.from("videos").update({ status }).eq("id", video.id);
+    if (error) {
+      alert("تعذّر تغيير الحالة: " + T.friendlyError(error));
+      return;
+    }
+    await loadMyVideos();
+  }
+
+  async function removeVideo(video) {
+    if (!confirm("حذف التلاوة «" + (video.title || "") + "» نهائيًا؟")) return;
+    const { error } = await T.client.from("videos").delete().eq("id", video.id);
+    if (error) {
+      alert("تعذّر الحذف: " + T.friendlyError(error));
+      return;
+    }
+    await T.removeFile(video.video_url);
+    await T.removeFile(video.thumbnail_url);
+    if (editing && editing.id === video.id) resetForm();
+    await loadMyVideos();
+  }
+
+  form.addEventListener("submit", async event => {
+    event.preventDefault();
+    if (saving) return;
+
+    const title = $("videoTitle").value.trim();
+    const readerName = $("readerName").value.trim();
+    const category = $("category").value;
+    const description = $("description").value.trim();
+    const status = $("submitMode").value === "draft" ? "draft" : "pending";
+    const videoFile = $("videoFile").files[0];
+    const thumbFile = $("thumbnailFile").files[0];
+
+    if (!title || !readerName || !category) {
+      setFormMessage("يرجى تعبئة العنوان واسم القارئ والتصنيف.", "error");
+      return;
+    }
+    if (!editing && !videoFile) {
+      setFormMessage("اختر ملف الصوت أو الفيديو.", "error");
+      return;
+    }
+    if (videoFile && !/^(audio|video)\//.test(videoFile.type)) {
+      setFormMessage("الملف المختار ليس ملف صوت أو فيديو.", "error");
+      return;
+    }
+    if (videoFile && videoFile.size > MAX_MB * 1024 * 1024) {
+      setFormMessage("حجم الملف أكبر من " + MAX_MB + " ميغابايت.", "error");
+      return;
+    }
+    if (thumbFile && !thumbFile.type.startsWith("image/")) {
+      setFormMessage("الصورة المصغرة يجب أن تكون صورة.", "error");
+      return;
+    }
+    if (!$("pledge").checked) {
+      setFormMessage("يرجى الموافقة على التعهد وسياسة المحتوى.", "error");
+      return;
+    }
+
+    saving = true;
+    saveButton.disabled = true;
+    let newVideoPath = null;
+    let newThumbPath = null;
+
+    try {
+      setFormMessage(videoFile ? "جارٍ رفع الملف... قد يستغرق ذلك بعض الوقت." : "جارٍ الحفظ...");
+
+      if (videoFile) newVideoPath = await T.uploadFile(user.id, "videos", videoFile);
+      if (thumbFile) newThumbPath = await T.uploadFile(user.id, "thumbnails", thumbFile);
+
+      const record = {
+        title,
+        reader_name: readerName,
+        category,
+        description: description || null,
+        status
+      };
+      if (newVideoPath) record.video_url = newVideoPath;
+      if (newThumbPath) record.thumbnail_url = newThumbPath;
+      // تعديل محتوى تلاوة منشورة يعيدها للمراجعة تلقائيًا من قاعدة البيانات
+      if (editing && editing.status === "published" && status === "pending") delete record.status;
+
+      let result;
+      if (editing) {
+        result = await T.client.from("videos").update(record).eq("id", editing.id).select("id").single();
+      } else {
+        record.user_id = user.id;
+        result = await T.client.from("videos").insert(record).select("id").single();
+      }
+      if (result.error) throw result.error;
+
+      if (editing && newVideoPath) await T.removeFile(editing.video_url);
+      if (editing && newThumbPath) await T.removeFile(editing.thumbnail_url);
+
+      const wasEditing = !!editing;
+      resetForm();
+      setFormMessage(
+        status === "draft"
+          ? "تم الحفظ كمسودة. يمكنك إرسالها للمراجعة متى شئت."
+          : (wasEditing ? "تم حفظ التعديلات، وأُعيدت التلاوة إلى المراجعة." : "تم رفع التلاوة بنجاح، وهي الآن قيد المراجعة. جزاك الله خيرًا."),
+        "success"
+      );
+      await loadMyVideos();
+    } catch (error) {
+      console.error("Upload error:", error);
+      if (newVideoPath) await T.removeFile(newVideoPath);
+      if (newThumbPath) await T.removeFile(newThumbPath);
+      setFormMessage("تعذّر الحفظ: " + T.friendlyError(error), "error");
+    } finally {
+      saving = false;
+      saveButton.disabled = false;
+    }
+  });
+
+  $("cancelEdit").addEventListener("click", () => {
+    resetForm();
+    formMessage.hidden = true;
+  });
+  $("submitMode").addEventListener("change", updateSaveLabel);
+  $("tabs").addEventListener("click", event => {
+    const tab = event.target.closest("[data-filter]");
+    if (!tab) return;
+    filter = tab.dataset.filter;
+    document.querySelectorAll("#tabs .tab").forEach(t => t.classList.toggle("active", t === tab));
+    renderList();
+  });
+
+  async function init() {
+    if (!T.client) {
+      setStatus("تعذّر تحميل مكتبة الاتصال. تحقق من الإنترنت.", "error");
+      return;
+    }
+    T.fillCategorySelect($("category"), { placeholder: "اختر التصنيف" });
+
+    const roles = await T.getMyRoles();
+    if (!roles.user) {
+      statusMessage.innerHTML = 'يجب تسجيل الدخول أولًا. <a href="' + T.loginUrl() + '">تسجيل الدخول</a>';
+      statusMessage.className = "notice error";
+      return;
+    }
+    if (roles.setupMissing) {
+      setStatus(T.friendlyError(roles.error), "error");
+      return;
+    }
+
+    document.querySelectorAll('[data-role-link="reviewer"]').forEach(a => a.hidden = !(roles.is_volunteer || roles.is_admin));
+    document.querySelectorAll('[data-role-link="admin"]').forEach(a => a.hidden = !roles.is_admin);
+
+    if (!roles.has_channel && !roles.is_admin) {
+      statusMessage.innerHTML = 'الرفع متاح لأصحاب القنوات المعتمدة. <a href="account.html">قدّم طلب قناتك من صفحة حسابي</a>.';
+      statusMessage.className = "notice";
+      return;
+    }
+
+    user = roles.user;
+    setStatus("الحساب: " + (user.email || "") + " — يمكنك رفع تلاواتك الآن.", "success");
+    $("workspace").hidden = false;
+    updateSaveLabel();
+    await loadMyVideos();
+  }
+
+  init().catch(error => {
+    console.error(error);
+    setStatus("حدث خطأ غير متوقع: " + T.friendlyError(error), "error");
+  });
+  </script>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#123f35">
+  <title>تشغيل التلاوة | تِبيان</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #123f35; --green-dark: #0b2c25; --green-light: #1d5a49;
+      --gold: #c6a45b; --gold-light: #e4cc8e; --cream: #f8f6ef;
+      --text: #263b34; --muted: #6d7b74; --border: #e7e4d9;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Cairo", sans-serif; background: var(--cream); color: var(--text); line-height: 1.8; }
+    a { color: inherit; text-decoration: none; }
+    header { background: var(--green-dark); color: white; padding: 14px 6%; }
+    .nav { max-width: 1100px; margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .brand { font-family: "Amiri", serif; font-size: 29px; font-weight: 700; color: var(--gold-light); }
+    .nav-links { display: flex; gap: 18px; font-size: 13px; flex-wrap: wrap; }
+    .nav-links a:hover { color: var(--gold-light); }
+
+    main { width: min(100% - 32px, 1100px); margin: 30px auto; display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; align-items: start; }
+    .player-card { background: white; border: 1px solid var(--border); border-radius: 18px; padding: 18px; box-shadow: 0 8px 30px #173b2910; }
+    .player { width: 100%; aspect-ratio: 16 / 9; background: #07130d; border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center; color: white; text-align: center; padding: 0; }
+    .player.is-audio { aspect-ratio: auto; min-height: 200px; flex-direction: column; gap: 16px; padding: 28px 20px;
+      background: radial-gradient(circle at 50% 20%, rgba(198,164,91,.22), transparent 55%), linear-gradient(135deg, var(--green-dark), var(--green)); }
+    .player.is-audio .audio-symbol { font-family: "Amiri", serif; font-size: 60px; color: var(--gold-light); line-height: 1; }
+    .player video, .player iframe { width: 100%; height: 100%; display: block; border: 0; background: black; }
+    .player audio { width: 100%; max-width: 560px; }
+    .player p { padding: 20px; }
+
+    .preview-banner { margin-bottom: 14px; padding: 12px 16px; border-radius: 10px; background: #fff4dc; color: #6f5317; font-size: 13px; border: 1px solid #f0dca8; }
+    h1 { font-family: "Amiri", serif; font-size: clamp(26px, 4vw, 36px); margin: 18px 0 6px; color: var(--green); line-height: 1.5; }
+    .meta { display: flex; flex-wrap: wrap; gap: 8px 16px; color: var(--muted); font-size: 13px; margin-bottom: 12px; }
+    .tag { background: #edf3ed; color: var(--green); border-radius: 20px; padding: 2px 11px; font-size: 12px; font-weight: 700; }
+    .channel-link { color: #a7833f; font-weight: 800; }
+    .description { color: #4e5d55; margin: 0; white-space: pre-wrap; font-size: 14px; border-top: 1px solid #eff0e9; padding-top: 12px; }
+    .notice { margin-top: 16px; padding: 12px 16px; border-radius: 10px; background: #f8f0dc; color: #70541e; font-size: 13px; }
+    .notice.error { background: #fbe9e7; color: #8a2420; }
+    [hidden] { display: none !important; }
+
+    aside { background: white; border: 1px solid var(--border); border-radius: 18px; padding: 16px; }
+    aside h2 { font-family: "Amiri", serif; color: var(--green); font-size: 22px; margin: 0 0 10px; }
+    .related { display: grid; gap: 10px; }
+    .related a { display: block; padding: 10px 12px; border: 1px solid #eef0e8; border-radius: 12px; transition: .2s; }
+    .related a:hover { border-color: var(--gold); background: #fcfbf6; }
+    .related strong { display: block; color: var(--green); font-size: 13px; line-height: 1.7; }
+    .related span { color: var(--muted); font-size: 11px; }
+
+    footer { margin-top: 40px; padding: 22px 16px; text-align: center; background: var(--green-dark); color: #d9e5de; font-size: 12px; }
+    footer span { color: var(--gold-light); }
+
+    @media (max-width: 860px) { main { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <a class="brand" href="index.html">تِبيان</a>
+      <div class="nav-links">
+        <a href="index.html">الرئيسية</a>
+        <a href="recitations.html">التلاوات</a>
+        <a href="categories.html">التصنيفات</a>
+        <a href="channels.html">القنوات</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="player-card">
+      <div class="preview-banner" id="previewBanner" hidden></div>
+      <div class="player" id="playerContainer"><p>جارٍ تجهيز التلاوة...</p></div>
+      <h1 id="videoTitle">التلاوة القرآنية</h1>
+      <div class="meta" id="videoMeta"></div>
+      <p class="description" id="videoDescription" hidden></p>
+      <div class="notice" id="statusMessage" role="status" aria-live="polite" hidden></div>
+    </section>
+
+    <aside id="relatedBox" hidden>
+      <h2>تلاوات أخرى</h2>
+      <div class="related" id="relatedList"></div>
+    </aside>
+  </main>
+
+  <footer>تِبيان — <span>نورٌ يُتلى، وعلمٌ يُرتقى</span></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="tibyan.js"></script>
+  <script>
+    "use strict";
+    const T = window.Tibyan;
+    const params = new URLSearchParams(window.location.search);
+    const requestedId = (params.get("id") || params.get("video") || "").trim();
+
+    const player = document.getElementById("playerContainer");
+    const status = document.getElementById("statusMessage");
+    const titleElement = document.getElementById("videoTitle");
+    const metaElement = document.getElementById("videoMeta");
+    const descriptionElement = document.getElementById("videoDescription");
+
+    function showMessage(message, isError = false) {
+      status.hidden = false;
+      status.textContent = message;
+      status.classList.toggle("error", isError);
+    }
+
+    function showPlayerText(text) {
+      player.className = "player";
+      player.innerHTML = "";
+      const p = document.createElement("p");
+      p.textContent = text;
+      player.appendChild(p);
+    }
+
+    function renderMedia(url, path) {
+      player.replaceChildren();
+      if (T.isAudioPath(path)) {
+        player.className = "player is-audio";
+        const symbol = document.createElement("div");
+        symbol.className = "audio-symbol";
+        symbol.textContent = "۞";
+        const audio = document.createElement("audio");
+        audio.controls = true;
+        audio.preload = "metadata";
+        audio.src = url;
+        audio.addEventListener("error", () => showMessage("تعذّر تشغيل الملف الصوتي.", true));
+        player.append(symbol, audio);
+      } else {
+        player.className = "player";
+        const video = document.createElement("video");
+        video.controls = true;
+        video.preload = "metadata";
+        video.playsInline = true;
+        video.src = url;
+        video.setAttribute("aria-label", "مشغل التلاوة القرآنية");
+        video.addEventListener("error", () => showMessage("تعذّر تشغيل الملف.", true));
+        player.appendChild(video);
+      }
+    }
+
+    function renderYouTube(id) {
+      player.className = "player";
+      player.replaceChildren();
+      const frame = document.createElement("iframe");
+      frame.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(id);
+      frame.title = "مشغل التلاوة";
+      frame.allow = "accelerometer; encrypted-media; gyroscope; picture-in-picture";
+      frame.allowFullscreen = true;
+      player.appendChild(frame);
+    }
+
+    function addMeta(text, className) {
+      const span = document.createElement("span");
+      if (className) span.className = className;
+      span.textContent = text;
+      metaElement.appendChild(span);
+      return span;
+    }
+
+    async function loadChannel(userId) {
+      if (!userId) return;
+      const { data } = await T.client
+        .from("channels")
+        .select("id,channel_name")
+        .eq("user_id", userId)
+        .eq("status", "approved")
+        .maybeSingle();
+      if (!data) return;
+      const link = document.createElement("a");
+      link.className = "channel-link";
+      link.href = "recitations.html?channel=" + encodeURIComponent(data.id);
+      link.textContent = "قناة: " + (data.channel_name || "");
+      metaElement.appendChild(link);
+    }
+
+    async function loadRelated(record) {
+      try {
+        let list = await T.fetchPublishedVideos({
+          categories: record.category ? [record.category] : null,
+          excludeId: record.id,
+          limit: 6
+        });
+        if (!list.length) list = await T.fetchPublishedVideos({ excludeId: record.id, limit: 6 });
+        if (!list.length) return;
+
+        document.getElementById("relatedList").innerHTML = list.map(v => `
+          <a href="${T.escapeHTML(T.watchUrl(v))}">
+            <strong>${T.escapeHTML(v.title || "تلاوة قرآنية")}</strong>
+            <span>${T.escapeHTML(v.reader_name || "")}</span>
+          </a>`).join("");
+        document.getElementById("relatedBox").hidden = false;
+      } catch (error) {
+        console.warn("related error", error);
+      }
+    }
+
+    async function main() {
+      if (!T.client) {
+        showPlayerText("تعذّر تحميل مكتبة الاتصال.");
+        showMessage("تحقق من اتصال الإنترنت ثم أعد فتح الصفحة.", true);
+        return;
+      }
+      if (!/^\d+$/.test(requestedId) && !/^[0-9a-f-]{36}$/i.test(requestedId)) {
+        showPlayerText("لم يتم تحديد التلاوة.");
+        showMessage("عُد إلى مكتبة التلاوات واختر تلاوة.", true);
+        return;
+      }
+
+      // سياسات قاعدة البيانات لا تُرجع للزائر إلا التلاوات المنشورة
+      const { data: record, error } = await T.client
+        .from("videos")
+        .select(T.VIDEO_COLUMNS)
+        .eq("id", requestedId)
+        .maybeSingle();
+
+      if (error) console.error("Tibyan video lookup error:", error);
+
+      if (!record) {
+        showPlayerText("هذه التلاوة غير متاحة.");
+        showMessage("قد تكون التلاوة قيد المراجعة أو غير موجودة. تُعرض التلاوات للزوار بعد اعتمادها فقط.", true);
+        return;
+      }
+
+      titleElement.textContent = record.title || "التلاوة القرآنية";
+      document.title = titleElement.textContent + " | تِبيان";
+      if (record.reader_name) addMeta("القارئ: " + record.reader_name);
+      if (record.category) addMeta(T.categoryLabel(record.category), "tag");
+      const date = T.formatDate(record.published_at || record.created_at);
+      if (date) addMeta(date);
+      if (record.description) {
+        descriptionElement.textContent = record.description;
+        descriptionElement.hidden = false;
+      }
+
+      if (record.status !== "published") {
+        const banner = document.getElementById("previewBanner");
+        banner.hidden = false;
+        banner.textContent = "معاينة خاصة: حالة هذه التلاوة «" +
+          (T.STATUS_LABELS[record.status] || record.status) +
+          "» ولا تظهر للزوار حتى تُعتمد.";
+      }
+
+      loadChannel(record.user_id);
+      if (record.status === "published") loadRelated(record);
+
+      const youtubeId = T.getYouTubeId(record.video_url);
+      if (youtubeId) {
+        renderYouTube(youtubeId);
+        return;
+      }
+
+      const path = T.storagePath(record.video_url);
+      if (!path) {
+        if (T.isHttpUrl(record.video_url || "")) {
+          renderMedia(record.video_url, record.video_url);
+          return;
+        }
+        showPlayerText("لا يوجد ملف مرتبط بهذه التلاوة.");
+        return;
+      }
+
+      const url = await T.signedUrl(path, 60 * 60 * 3);
+      if (!url) {
+        showPlayerText("تعذّر تجهيز مشغل التلاوة.");
+        showMessage("تعذّر إنشاء رابط التشغيل. حاول مرة أخرى بعد قليل.", true);
+        return;
+      }
+      renderMedia(url, path);
+    }
+
+    main().catch(error => {
+      console.error("Tibyan player error:", error);
+      showMessage("حدث خطأ غير متوقع أثناء تجهيز التلاوة.", true);
+    });
+  </script>
+</body>
+</html>
